@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import EventDetails from './components/EventDetails';
-import IncomeSection from './components/IncomeSection';
-import ExpenseSection from './components/ExpenseSection';
-import Summary from './components/Summary';
+import FoodItemsSection from './components/FoodItemsSection';
+import TotalPriceSection from './components/TotalPriceSection';
 import ActionButtons from './components/ActionButtons';
 import PrintableStatement from './components/PrintableStatement';
 import ConfirmModal from './components/ConfirmModal';
@@ -14,7 +13,6 @@ import {
   getEmptyNote,
   DEMO_DATA
 } from './utils/storage';
-import { parseAmount } from './utils/formatters';
 
 export default function App() {
   const [data, setData] = useState(() => loadNoteFromStorage());
@@ -32,14 +30,13 @@ export default function App() {
     saveNoteToStorage(data);
   }, [data]);
 
-  // Total calculations
-  const totalIncome = useMemo(() => {
-    return data.incomes.reduce((sum, item) => sum + parseAmount(item.amount), 0);
-  }, [data.incomes]);
-
-  const totalExpense = useMemo(() => {
-    return data.expenses.reduce((sum, item) => sum + parseAmount(item.amount), 0);
-  }, [data.expenses]);
+  // Total items count (non-empty items)
+  const totalItemsCount = useMemo(() => {
+    const valid = data.items.filter(
+      (item) => (item.name && item.name.trim() !== '') || (item.quantity && String(item.quantity).trim() !== '')
+    );
+    return valid.length;
+  }, [data.items]);
 
   // Handlers for updating state
   const handleDetailsChange = (newDetails) => {
@@ -49,17 +46,17 @@ export default function App() {
     }));
   };
 
-  const handleIncomesChange = (newIncomes) => {
+  const handleItemsChange = (newItems) => {
     setData((prev) => ({
       ...prev,
-      incomes: newIncomes
+      items: newItems
     }));
   };
 
-  const handleExpensesChange = (newExpenses) => {
+  const handleTotalPriceChange = (newPrice) => {
     setData((prev) => ({
       ...prev,
-      expenses: newExpenses
+      totalPrice: newPrice
     }));
   };
 
@@ -76,7 +73,7 @@ export default function App() {
     setModalState({
       isOpen: true,
       title: 'Clear All Information?',
-      message: 'This will reset all entered client details, income entries, and expense items. Are you sure you want to proceed?',
+      message: 'This will reset all food items, event details, and the total price. Are you sure you want to proceed?',
       confirmText: 'Clear Note',
       isDestructive: true,
       onConfirm: () => {
@@ -90,8 +87,8 @@ export default function App() {
   const handleNewNoteRequest = () => {
     setModalState({
       isOpen: true,
-      title: 'Start a New Note?',
-      message: 'This will create a blank statement for a new event. Unsaved entries from the current note will be replaced.',
+      title: 'Start a New Handover Note?',
+      message: 'This will create a blank food handover note for a new event.',
       confirmText: 'Start New',
       isDestructive: false,
       onConfirm: () => {
@@ -111,44 +108,37 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* Top Luxury Branding Banner */}
+      {/* Top Branding Header */}
       <Header
         onLoadDemo={handleLoadDemo}
         onNewNote={handleNewNoteRequest}
       />
 
-      {/* Main Screen Form Layout */}
+      {/* Main Screen Layout */}
       <main className="screen-container">
-        {/* Basic Event & Client Fields */}
+        {/* Event, Date, Client, Location */}
         <EventDetails
           details={{
             date: data.date,
             eventName: data.eventName,
-            customerName: data.customerName,
+            clientName: data.clientName,
             eventLocation: data.eventLocation,
             phoneNumber: data.phoneNumber
           }}
           onChange={handleDetailsChange}
         />
 
-        {/* Dynamic Income Section */}
-        <IncomeSection
-          incomes={data.incomes}
-          onChange={handleIncomesChange}
-          totalIncome={totalIncome}
+        {/* Food Items List (Food Item, Qty, Unit) */}
+        <FoodItemsSection
+          items={data.items}
+          onChange={handleItemsChange}
         />
 
-        {/* Dynamic Expense Section */}
-        <ExpenseSection
-          expenses={data.expenses}
-          onChange={handleExpensesChange}
-          totalExpense={totalExpense}
-        />
-
-        {/* Summary Card with Balance / Profit or Loss */}
-        <Summary
-          totalIncome={totalIncome}
-          totalExpense={totalExpense}
+        {/* Single Manual TOTAL PRICE & TOTAL ITEMS */}
+        <TotalPriceSection
+          totalItems={totalItemsCount}
+          totalPrice={data.totalPrice}
+          onTotalPriceChange={handleTotalPriceChange}
         />
       </main>
 
@@ -158,22 +148,19 @@ export default function App() {
         onSavePdf={handleSavePdf}
         onClear={handleClearRequest}
         onNewNote={handleNewNoteRequest}
-        onLoadDemo={handleLoadDemo}
       />
 
-      {/* Dedicated A4 Printable Statement (Active in Print / PDF dialog) */}
+      {/* Dedicated A4 Printable Document */}
       <PrintableStatement
         details={{
           date: data.date,
           eventName: data.eventName,
-          customerName: data.customerName,
+          clientName: data.clientName,
           eventLocation: data.eventLocation,
           phoneNumber: data.phoneNumber
         }}
-        incomes={data.incomes}
-        expenses={data.expenses}
-        totalIncome={totalIncome}
-        totalExpense={totalExpense}
+        items={data.items}
+        totalPrice={data.totalPrice}
       />
 
       {/* Confirmation Modal */}

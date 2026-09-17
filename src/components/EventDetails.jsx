@@ -16,11 +16,27 @@ export default function EventDetails({ details, onChange }) {
           <FileTextIcon className="w-5 h-5 text-gold" />
           <h2>Event Details</h2>
         </div>
-        <span className="card-subtext">Basic Event & Client Information</span>
+        <span className="card-subtext">Event, Date, Client & Venue Location</span>
       </div>
 
       <div className="card-body">
         <div className="grid-form">
+          {/* Event */}
+          <div className="form-group">
+            <label htmlFor="event-name">
+              <span className="label-bullet">✦</span>
+              <span>Event</span>
+            </label>
+            <input
+              id="event-name"
+              type="text"
+              placeholder="e.g. Rahul Wedding"
+              value={details.eventName || ''}
+              onChange={(e) => handleChange('eventName', e.target.value)}
+              className="form-input"
+            />
+          </div>
+
           {/* Date */}
           <div className="form-group">
             <label htmlFor="event-date">
@@ -36,62 +52,46 @@ export default function EventDetails({ details, onChange }) {
             />
           </div>
 
-          {/* Event Name */}
+          {/* Client */}
           <div className="form-group">
-            <label htmlFor="event-name">
-              <span className="label-bullet">✦</span>
-              <span>Event Name</span>
-            </label>
-            <input
-              id="event-name"
-              type="text"
-              placeholder="e.g. Rahul Wedding, Reception"
-              value={details.eventName || ''}
-              onChange={(e) => handleChange('eventName', e.target.value)}
-              className="form-input"
-            />
-          </div>
-
-          {/* Customer Name */}
-          <div className="form-group">
-            <label htmlFor="customer-name">
+            <label htmlFor="client-name">
               <UserIcon className="w-4 h-4 text-emerald" />
-              <span>Customer Name</span>
+              <span>Client</span>
             </label>
             <input
-              id="customer-name"
+              id="client-name"
               type="text"
-              placeholder="e.g. Rahul Sharma"
-              value={details.customerName || ''}
-              onChange={(e) => handleChange('customerName', e.target.value)}
+              placeholder="e.g. Rahul"
+              value={details.clientName || details.customerName || ''}
+              onChange={(e) => handleChange('clientName', e.target.value)}
               className="form-input"
             />
           </div>
 
-          {/* Event Location */}
+          {/* Location */}
           <div className="form-group">
             <label htmlFor="event-location">
               <MapPinIcon className="w-4 h-4 text-emerald" />
-              <span>Event Location</span>
+              <span>Location</span>
             </label>
             <input
               id="event-location"
               type="text"
-              placeholder="e.g. Grand Palace, Kochi"
+              placeholder="e.g. Ernakulam"
               value={details.eventLocation || ''}
               onChange={(e) => handleChange('eventLocation', e.target.value)}
               className="form-input"
             />
           </div>
 
-          {/* Phone Number (optional) */}
+          {/* Phone (Optional) */}
           <div className="form-group phone-group">
-            <label htmlFor="customer-phone">
+            <label htmlFor="client-phone">
               <PhoneIcon className="w-4 h-4 text-emerald" />
-              <span>Phone Number <span className="optional-tag">(Optional)</span></span>
+              <span>Phone <span className="optional-tag">(Optional)</span></span>
             </label>
             <input
-              id="customer-phone"
+              id="client-phone"
               type="tel"
               placeholder="e.g. +91 98470 12345"
               value={details.phoneNumber || ''}
