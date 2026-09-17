@@ -101,26 +101,29 @@ export default function PrintableStatement({ details, items, totalPrice }) {
         </div>
       </div>
 
-      {/* Signature & Confirmation Line */}
-      <div className="print-footer-signatures">
-        <div className="signature-col">
-          <div className="signature-line"></div>
-          <div className="signature-title">Client / Receiver Signature</div>
-          <div className="signature-sub">({details.clientName || 'Client'})</div>
+      {/* Bottom Block (Signatures + Closing Acknowledgement) bound together */}
+      <div className="print-bottom-block">
+        {/* Signature & Confirmation Line */}
+        <div className="print-footer-signatures">
+          <div className="signature-col">
+            <div className="signature-line"></div>
+            <div className="signature-title">Client / Receiver Signature</div>
+            <div className="signature-sub">({details.clientName || 'Client'})</div>
+          </div>
+
+          <div className="signature-col signature-col-right">
+            <div className="signature-line"></div>
+            <div className="signature-title">Kitchen / Dispatch Incharge</div>
+            <div className="signature-sub">For Silver Catering Services</div>
+          </div>
         </div>
 
-        <div className="signature-col signature-col-right">
-          <div className="signature-line"></div>
-          <div className="signature-title">Kitchen / Dispatch Incharge</div>
-          <div className="signature-sub">For Silver Catering Services</div>
+        {/* Closing Acknowledgement */}
+        <div className="print-closing-statement">
+          <h3 className="print-closing-tag">FOOD HANDOVER NOTE</h3>
+          <p className="closing-thankyou">Thank you for choosing us.</p>
+          <p className="closing-note">OFFICIAL DISPATCH & QUALITY VERIFICATION RECORD</p>
         </div>
-      </div>
-
-      {/* Closing Acknowledgement */}
-      <div className="print-closing-statement">
-        <h3 className="print-closing-tag">FOOD HANDOVER NOTE</h3>
-        <p className="closing-thankyou">Thank you for choosing us.</p>
-        <p className="closing-note">Official dispatch & quality verification record.</p>
       </div>
     </div>
   );
