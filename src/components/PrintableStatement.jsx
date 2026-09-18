@@ -1,12 +1,8 @@
 import React from 'react';
 import { formatINR, formatDate, parseAmount } from '../utils/formatters';
+import { SECTIONS_CONFIG } from '../utils/storage';
 
-export default function PrintableStatement({ details, items, totalPrice }) {
-  const validItems = items.filter(
-    (item) => (item.name && item.name.trim() !== '') || (item.quantity && String(item.quantity).trim() !== '')
-  );
-
-  const totalItemsCount = validItems.length;
+export default function PrintableStatement({ details, sections, totalItems, totalPrice }) {
   const numericPrice = parseAmount(totalPrice);
 
   return (
@@ -103,36 +99,59 @@ export default function PrintableStatement({ details, items, totalPrice }) {
       </div>
 
       {/* ========================================================
-          FOOD ITEMS TABLE: Yellow Item Header + Dark Qty/Unit Header
+          4 FOOD TIME SECTIONS: Sequential Tables
+          1. DAY MORNING | 2. DAY AFTERNOON | 3. EVENING | 4. NIGHT
           ======================================================== */}
-      <div className="inv-table-wrap">
-        <table className="inv-table">
-          <thead>
-            <tr>
-              <th className="inv-th-desc">FOOD ITEM DESCRIPTION</th>
-              <th className="inv-th-dark inv-th-qty">QTY</th>
-              <th className="inv-th-dark inv-th-unit">UNIT</th>
-            </tr>
-          </thead>
-          <tbody>
-            {validItems.length > 0 ? (
-              validItems.map((item, index) => (
-                <tr key={item.id || index} className={index % 2 === 1 ? 'inv-row-alt' : 'inv-row-white'}>
-                  <td className="inv-td-desc">
-                    <span className="inv-item-name">{item.name || 'General Item'}</span>
-                    <span className="inv-item-sub">Kitchen Verified & Thermally Staged</span>
-                  </td>
-                  <td className="inv-td-qty">{item.quantity || '—'}</td>
-                  <td className="inv-td-unit">{item.unit || 'KG'}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="3" className="inv-empty-row">No food items entered</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+      <div className="inv-sections-container">
+        {SECTIONS_CONFIG.map((sec, secIdx) => {
+          const rawItems = (sections && sections[sec.key]) || [];
+          const validItems = rawItems.filter(
+            (item) => (item.name && item.name.trim() !== '') || (item.quantity && String(item.quantity).trim() !== '')
+          );
+
+          return (
+            <div key={sec.key} className="inv-section-block">
+              {/* Section Header Banner */}
+              <div className="inv-sec-header">
+                <div className="inv-sec-title-left">
+                  <span className="inv-sec-index">{secIdx + 1}</span>
+                  <span className="inv-sec-title">{sec.label}</span>
+                </div>
+                <div className="inv-sec-title-right">
+                  <span className="inv-sec-count">{validItems.length} {validItems.length === 1 ? 'Item' : 'Items'}</span>
+                </div>
+              </div>
+
+              {/* Section Food Items Table */}
+              <table className="inv-table">
+                <thead>
+                  <tr>
+                    <th className="inv-th-desc">FOOD ITEM</th>
+                    <th className="inv-th-dark inv-th-qty">QTY</th>
+                    <th className="inv-th-dark inv-th-unit">UNIT</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {validItems.length > 0 ? (
+                    validItems.map((item, index) => (
+                      <tr key={item.id || index} className={index % 2 === 1 ? 'inv-row-alt' : 'inv-row-white'}>
+                        <td className="inv-td-desc">
+                          <span className="inv-item-name">{item.name || 'General Item'}</span>
+                        </td>
+                        <td className="inv-td-qty">{item.quantity || '—'}</td>
+                        <td className="inv-td-unit">{item.unit || 'KG'}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="3" className="inv-empty-row">No items scheduled for {sec.label}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          );
+        })}
       </div>
 
       {/* ========================================================
@@ -150,8 +169,8 @@ export default function PrintableStatement({ details, items, totalPrice }) {
         {/* Right: Subtotal & Yellow TOTAL PRICE Bar */}
         <div className="inv-totals-block">
           <div className="inv-subtotal-line">
-            <span className="inv-subtotal-lbl">Total Items:</span>
-            <span className="inv-subtotal-val">{totalItemsCount} Items</span>
+            <span className="inv-subtotal-lbl">Total Items (All 4 Sections):</span>
+            <span className="inv-subtotal-val">{totalItems} Items</span>
           </div>
 
           <div className="inv-grand-total-bar">
@@ -167,7 +186,7 @@ export default function PrintableStatement({ details, items, totalPrice }) {
       <div className="inv-footer-row">
         {/* Left: Thank You & Terms */}
         <div className="inv-footer-left">
-          <h4 className="inv-thanks-text">Thank you for your business!</h4>
+          <h4 className="inv-thanks-text">Thank you for choosing us!</h4>
           <p className="inv-terms-text">
             <strong>TERMS:</strong> Official food handover record. All quantities and culinary specifications verified upon delivery.
           </p>
@@ -183,3 +202,4 @@ export default function PrintableStatement({ details, items, totalPrice }) {
     </div>
   );
 }
+

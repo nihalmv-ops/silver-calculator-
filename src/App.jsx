@@ -30,13 +30,20 @@ export default function App() {
     saveNoteToStorage(data);
   }, [data]);
 
-  // Total items count (non-empty items)
+  // Total items count (non-empty items across all 4 sections)
   const totalItemsCount = useMemo(() => {
-    const valid = data.items.filter(
-      (item) => (item.name && item.name.trim() !== '') || (item.quantity && String(item.quantity).trim() !== '')
-    );
-    return valid.length;
-  }, [data.items]);
+    if (!data.sections) return 0;
+    let count = 0;
+    const sectionKeys = ['morning', 'afternoon', 'evening', 'night'];
+    sectionKeys.forEach((key) => {
+      const items = data.sections[key] || [];
+      const valid = items.filter(
+        (item) => (item.name && item.name.trim() !== '') || (item.quantity && String(item.quantity).trim() !== '')
+      );
+      count += valid.length;
+    });
+    return count;
+  }, [data.sections]);
 
   // Handlers for updating state
   const handleDetailsChange = (newDetails) => {
@@ -46,10 +53,13 @@ export default function App() {
     }));
   };
 
-  const handleItemsChange = (newItems) => {
+  const handleSectionItemsChange = (sectionKey, newItems) => {
     setData((prev) => ({
       ...prev,
-      items: newItems
+      sections: {
+        ...prev.sections,
+        [sectionKey]: newItems
+      }
     }));
   };
 
@@ -73,7 +83,7 @@ export default function App() {
     setModalState({
       isOpen: true,
       title: 'Clear All Information?',
-      message: 'This will reset all food items, event details, and the total price. Are you sure you want to proceed?',
+      message: 'This will reset all food items across all 4 sections, event details, and the total price. Are you sure you want to proceed?',
       confirmText: 'Clear Note',
       isDestructive: true,
       onConfirm: () => {
@@ -128,13 +138,13 @@ export default function App() {
           onChange={handleDetailsChange}
         />
 
-        {/* Food Items List (Food Item, Qty, Unit) */}
+        {/* 4 Food Time Sections (DAY MORNING, DAY AFTERNOON, EVENING, NIGHT) */}
         <FoodItemsSection
-          items={data.items}
-          onChange={handleItemsChange}
+          sections={data.sections}
+          onSectionItemsChange={handleSectionItemsChange}
         />
 
-        {/* Single Manual TOTAL PRICE & TOTAL ITEMS */}
+        {/* Single Manual TOTAL PRICE & Combined TOTAL ITEMS */}
         <TotalPriceSection
           totalItems={totalItemsCount}
           totalPrice={data.totalPrice}
@@ -150,7 +160,7 @@ export default function App() {
         onNewNote={handleNewNoteRequest}
       />
 
-      {/* Dedicated A4 Printable Document */}
+      {/* Dedicated A4 Printable Document with all 4 sections in order */}
       <PrintableStatement
         details={{
           date: data.date,
@@ -159,7 +169,8 @@ export default function App() {
           eventLocation: data.eventLocation,
           phoneNumber: data.phoneNumber
         }}
-        items={data.items}
+        sections={data.sections}
+        totalItems={totalItemsCount}
         totalPrice={data.totalPrice}
       />
 
@@ -176,3 +187,4 @@ export default function App() {
     </div>
   );
 }
+

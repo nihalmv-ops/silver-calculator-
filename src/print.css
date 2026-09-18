@@ -268,48 +268,104 @@
   }
 
   /* ========================================================
-     FOOD ITEMS TABLE: Yellow Item Header + Dark Qty/Unit Header
+     4 FOOD TIME SECTIONS: Sequential Tables
+     DAY MORNING, DAY AFTERNOON, EVENING, NIGHT
      ======================================================== */
-  .inv-table-wrap {
-    margin-bottom: 8pt;
+  .inv-sections-container {
+    margin-bottom: 6pt;
     page-break-inside: avoid;
     break-inside: avoid;
+  }
+
+  .inv-section-block {
+    margin-bottom: 4.5pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border: 0.5pt solid #d1d5db;
+    border-radius: 2pt;
+    overflow: hidden;
+  }
+
+  .inv-sec-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #23282c !important;
+    color: #ffffff !important;
+    padding: 2.5pt 6pt;
+  }
+
+  .inv-sec-title-left {
+    display: flex;
+    align-items: center;
+    gap: 5pt;
+  }
+
+  .inv-sec-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 12pt;
+    height: 12pt;
+    background-color: #f2b731 !important;
+    color: #1a1d20 !important;
+    font-size: 7.5pt;
+    font-weight: 800;
+    border-radius: 2pt;
+  }
+
+  .inv-sec-title {
+    font-size: 8pt;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+
+  .inv-sec-title-right {
+    font-size: 7pt;
+    color: #f2b731;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
   }
 
   .inv-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 8.5pt;
+    font-size: 8pt;
   }
 
   .inv-th-desc {
-    background-color: #f2b731 !important;
-    color: #1a1d20 !important;
-    padding: 4.5pt 8pt;
-    font-size: 7.5pt;
+    background-color: #eef1f5 !important;
+    color: #374151 !important;
+    padding: 2pt 6pt;
+    font-size: 6.8pt;
     font-weight: 800;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
     text-align: left;
+    border-bottom: 0.5pt solid #d1d5db;
   }
 
   .inv-th-dark {
-    background-color: #23282c !important;
-    color: #ffffff !important;
-    padding: 4.5pt 8pt;
-    font-size: 7.5pt;
-    font-weight: 700;
-    letter-spacing: 0.6px;
+    background-color: #eef1f5 !important;
+    color: #374151 !important;
+    padding: 2pt 6pt;
+    font-size: 6.8pt;
+    font-weight: 800;
+    letter-spacing: 0.5px;
     text-transform: uppercase;
+    border-bottom: 0.5pt solid #d1d5db;
   }
 
   .inv-th-qty {
-    width: 60pt;
+    width: 55pt;
     text-align: right !important;
   }
 
   .inv-th-unit {
-    width: 55pt;
+    width: 50pt;
     text-align: center !important;
   }
 
@@ -323,12 +379,13 @@
   }
 
   .inv-row-alt {
-    background-color: #f3f5f8 !important;
+    background-color: #f8fafc !important;
   }
 
   .inv-table td {
-    padding: 3pt 8pt;
+    padding: 2pt 6pt;
     vertical-align: middle;
+    border-bottom: 0.5pt solid #f1f5f9;
   }
 
   .inv-td-desc {
@@ -338,22 +395,15 @@
   .inv-item-name {
     font-weight: 700;
     color: #111827;
-    font-size: 8.5pt;
-    display: block;
-    line-height: 1.2;
-  }
-
-  .inv-item-sub {
-    font-size: 6.5pt;
-    color: #6b7280;
-    display: block;
-    line-height: 1.15;
+    font-size: 7.8pt;
+    display: inline;
   }
 
   .inv-td-qty {
     text-align: right;
     font-weight: 700;
     color: #111827;
+    font-size: 7.8pt;
     font-variant-numeric: tabular-nums;
   }
 
@@ -361,15 +411,16 @@
     text-align: center;
     font-weight: 600;
     color: #4b5563;
-    font-size: 8pt;
+    font-size: 7.5pt;
     text-transform: uppercase;
   }
 
   .inv-empty-row {
     text-align: center;
-    color: #888888;
+    color: #9ca3af;
     font-style: italic;
-    padding: 8pt;
+    padding: 3.5pt 6pt;
+    font-size: 7.2pt;
   }
 
   /* ========================================================
