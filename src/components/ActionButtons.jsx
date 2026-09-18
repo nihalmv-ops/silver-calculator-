@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { PrinterIcon, DownloadIcon, TrashIcon, RefreshCwIcon } from './icons';
+import { PrinterIcon, DownloadIcon, TrashIcon, RefreshCwIcon, FileTextIcon } from './icons';
 
-export default function ActionButtons({ onPrint, onSavePdf, onClear, onNewNote }) {
+export default function ActionButtons({ onPrint, onSavePdf, onClear, onNewNote, viewMode, onToggleView }) {
   const [pdfTooltip, setPdfTooltip] = useState(false);
 
   const handlePdfClick = () => {
@@ -16,6 +16,17 @@ export default function ActionButtons({ onPrint, onSavePdf, onClear, onNewNote }
     <div className="action-bar-container no-print">
       <div className="action-bar-inner">
         <div className="action-group-primary">
+          {/* Toggle A4 Document Preview */}
+          <button
+            type="button"
+            className={`btn-action btn-preview ${viewMode === 'preview' ? 'active-preview' : ''}`}
+            onClick={onToggleView}
+            title={viewMode === 'preview' ? 'Switch back to Note Editor' : 'Preview A4 Document Model'}
+          >
+            <FileTextIcon className="w-5 h-5" />
+            <span className="btn-text">{viewMode === 'preview' ? 'EDIT NOTE' : 'A4 MODEL'}</span>
+          </button>
+
           <button
             type="button"
             className="btn-action btn-print"
@@ -43,6 +54,7 @@ export default function ActionButtons({ onPrint, onSavePdf, onClear, onNewNote }
             )}
           </div>
         </div>
+
 
         <div className="action-group-secondary">
           <button

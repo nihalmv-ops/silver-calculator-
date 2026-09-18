@@ -6,6 +6,7 @@ import TotalPriceSection from './components/TotalPriceSection';
 import ActionButtons from './components/ActionButtons';
 import PrintableStatement from './components/PrintableStatement';
 import ConfirmModal from './components/ConfirmModal';
+import { UtensilsIcon, FileTextIcon, PrinterIcon, DownloadIcon, RefreshCwIcon } from './components/icons';
 import {
   loadNoteFromStorage,
   saveNoteToStorage,
@@ -16,6 +17,7 @@ import {
 
 export default function App() {
   const [data, setData] = useState(() => loadNoteFromStorage());
+  const [viewMode, setViewMode] = useState('editor'); // 'editor' | 'preview'
   const [modalState, setModalState] = useState({
     isOpen: false,
     title: '',
@@ -68,6 +70,10 @@ export default function App() {
       ...prev,
       totalPrice: newPrice
     }));
+  };
+
+  const handleToggleView = () => {
+    setViewMode((prev) => (prev === 'editor' ? 'preview' : 'editor'));
   };
 
   // Actions
@@ -126,30 +132,113 @@ export default function App() {
 
       {/* Main Screen Layout */}
       <main className="screen-container">
-        {/* Event, Date, Client, Location */}
-        <EventDetails
-          details={{
-            date: data.date,
-            eventName: data.eventName,
-            clientName: data.clientName,
-            eventLocation: data.eventLocation,
-            phoneNumber: data.phoneNumber
-          }}
-          onChange={handleDetailsChange}
-        />
+        {/* View Mode Switcher: Editor vs A4 Document Model */}
+        <div className="view-mode-tabs-wrap no-print">
+          <div className="view-mode-tabs">
+            <button
+              type="button"
+              className={`view-mode-tab ${viewMode === 'editor' ? 'active' : ''}`}
+              onClick={() => setViewMode('editor')}
+            >
+              <UtensilsIcon className="w-4 h-4" />
+              <span>Note Editor</span>
+            </button>
+            <button
+              type="button"
+              className={`view-mode-tab ${viewMode === 'preview' ? 'active' : ''}`}
+              onClick={() => setViewMode('preview')}
+            >
+              <FileTextIcon className="w-4 h-4" />
+              <span>A4 Document Model (Print Preview)</span>
+            </button>
+          </div>
+        </div>
 
-        {/* 4 Food Time Sections (DAY MORNING, DAY AFTERNOON, EVENING, NIGHT) */}
-        <FoodItemsSection
-          sections={data.sections}
-          onSectionItemsChange={handleSectionItemsChange}
-        />
+        {viewMode === 'editor' ? (
+          <>
+            {/* Event, Date, Client, Location */}
+            <EventDetails
+              details={{
+                date: data.date,
+                eventName: data.eventName,
+                clientName: data.clientName,
+                eventLocation: data.eventLocation,
+                phoneNumber: data.phoneNumber
+              }}
+              onChange={handleDetailsChange}
+            />
 
-        {/* Single Manual TOTAL PRICE & Combined TOTAL ITEMS */}
-        <TotalPriceSection
-          totalItems={totalItemsCount}
-          totalPrice={data.totalPrice}
-          onTotalPriceChange={handleTotalPriceChange}
-        />
+            {/* 4 Food Time Sections (DAY MORNING, DAY AFTERNOON, EVENING, NIGHT) */}
+            <FoodItemsSection
+              sections={data.sections}
+              onSectionItemsChange={handleSectionItemsChange}
+            />
+
+            {/* Single Manual TOTAL PRICE & Combined TOTAL ITEMS */}
+            <TotalPriceSection
+              totalItems={totalItemsCount}
+              totalPrice={data.totalPrice}
+              onTotalPriceChange={handleTotalPriceChange}
+            />
+          </>
+        ) : (
+          /* Live On-Screen A4 Document Model Preview */
+          <div className="screen-a4-preview-container no-print">
+            {/* Preview Toolbar */}
+            <div className="a4-preview-toolbar">
+              <div className="toolbar-title-group">
+                <span className="toolbar-badge">A4 DOCUMENT MODEL</span>
+                <span className="toolbar-label">Official Catering Food Handover Note</span>
+              </div>
+
+              <div className="toolbar-actions">
+                <button
+                  type="button"
+                  className="btn-toolbar-edit"
+                  onClick={() => setViewMode('editor')}
+                >
+                  <UtensilsIcon className="w-4 h-4" />
+                  <span>Edit Note</span>
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-toolbar-print"
+                  onClick={handlePrint}
+                >
+                  <PrinterIcon className="w-4 h-4" />
+                  <span>Print A4</span>
+                </button>
+
+                <button
+                  type="button"
+                  className="btn-toolbar-pdf"
+                  onClick={handleSavePdf}
+                >
+                  <DownloadIcon className="w-4 h-4" />
+                  <span>Save PDF</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Live A4 Sheet Preview */}
+            <div className="screen-a4-sheet">
+              <PrintableStatement
+                details={{
+                  date: data.date,
+                  eventName: data.eventName,
+                  clientName: data.clientName,
+                  eventLocation: data.eventLocation,
+                  phoneNumber: data.phoneNumber
+                }}
+                sections={data.sections}
+                totalItems={totalItemsCount}
+                totalPrice={data.totalPrice}
+                isScreenPreview={true}
+              />
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Bottom Sticky Action Bar */}
@@ -158,9 +247,11 @@ export default function App() {
         onSavePdf={handleSavePdf}
         onClear={handleClearRequest}
         onNewNote={handleNewNoteRequest}
+        viewMode={viewMode}
+        onToggleView={handleToggleView}
       />
 
-      {/* Dedicated A4 Printable Document with all 4 sections in order */}
+      {/* Dedicated A4 Printable Document with all 4 sections in order (Always ready for @media print) */}
       <PrintableStatement
         details={{
           date: data.date,
@@ -172,6 +263,7 @@ export default function App() {
         sections={data.sections}
         totalItems={totalItemsCount}
         totalPrice={data.totalPrice}
+        isScreenPreview={false}
       />
 
       {/* Confirmation Modal */}
@@ -187,4 +279,5 @@ export default function App() {
     </div>
   );
 }
+
 

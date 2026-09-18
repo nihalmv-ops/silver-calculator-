@@ -2,11 +2,14 @@ import React from 'react';
 import { formatINR, formatDate, parseAmount } from '../utils/formatters';
 import { SECTIONS_CONFIG } from '../utils/storage';
 
-export default function PrintableStatement({ details, sections, totalItems, totalPrice }) {
+export default function PrintableStatement({ details, sections, totalItems, totalPrice, isScreenPreview = false }) {
   const numericPrice = parseAmount(totalPrice);
 
   return (
-    <div className="printable-statement invoice-model-template" id="printable-statement">
+    <div
+      className={`printable-statement invoice-model-template ${isScreenPreview ? 'screen-a4-sheet' : ''}`}
+      id={isScreenPreview ? undefined : 'printable-statement'}
+    >
       {/* ========================================================
           TOP HEADER: Dark Charcoal Banner with Wave & Official Logo
           ======================================================== */}
@@ -181,25 +184,89 @@ export default function PrintableStatement({ details, sections, totalItems, tota
       </div>
 
       {/* ========================================================
-          FOOTER: Thank You Note & Signature Line
+          FOOTER: Terms & Dual Signatures (Client + Sample Manager)
           ======================================================== */}
       <div className="inv-footer-row">
-        {/* Left: Thank You & Terms */}
-        <div className="inv-footer-left">
+        {/* Left: Client / Receiver Signature */}
+        <div className="inv-footer-sig-col inv-client-sig-col">
+          <div className="inv-sig-space"></div>
+          <div className="inv-sig-line"></div>
+          <div className="inv-sig-label">CLIENT / RECEIVER SIGNATURE</div>
+          <div className="inv-sig-sub">Received in Good Condition</div>
+        </div>
+
+        {/* Center: Terms & Thank You */}
+        <div className="inv-footer-center">
           <h4 className="inv-thanks-text">Thank you for choosing us!</h4>
           <p className="inv-terms-text">
-            <strong>TERMS:</strong> Official food handover record. All quantities and culinary specifications verified upon delivery.
+            Official food handover record. All items verified upon kitchen dispatch.
           </p>
         </div>
 
-        {/* Right: Empty Sign and Name Area */}
-        <div className="inv-footer-right">
-          <div className="inv-sig-space"></div>
+        {/* Right: Manager Signature Sample with Official Verification Stamp */}
+        <div className="inv-footer-sig-col inv-manager-sig-col">
+          <div className="inv-manager-signature-wrap">
+            {/* Official Circular Verification Stamp */}
+            <div className="inv-seal-stamp" title="Official Dispatch Verification Seal">
+              <svg viewBox="0 0 100 100" className="inv-seal-svg">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="#1d4ed8" strokeWidth="2.2" strokeDasharray="3 2" opacity="0.85" />
+                <circle cx="50" cy="50" r="41" fill="none" stroke="#1d4ed8" strokeWidth="1" opacity="0.85" />
+                <path id="sealPathTop" d="M 17,50 A 33,33 0 1,1 83,50" fill="none" />
+                <path id="sealPathBot" d="M 83,50 A 33,33 0 0,1 17,50" fill="none" />
+                <text fill="#1d4ed8" fontSize="6" fontWeight="800" letterSpacing="0.8" opacity="0.9">
+                  <textPath href="#sealPathTop" startOffset="50%" textAnchor="middle">
+                    SILVER CATERING SERVICES
+                  </textPath>
+                </text>
+                <text fill="#1d4ed8" fontSize="5" fontWeight="700" letterSpacing="0.6" opacity="0.9">
+                  <textPath href="#sealPathBot" startOffset="50%" textAnchor="middle">
+                    ★ VERIFIED & APPROVED ★
+                  </textPath>
+                </text>
+                <text x="50" y="46" fill="#1d4ed8" fontSize="7.2" fontWeight="900" textAnchor="middle" letterSpacing="0.6" opacity="0.95">
+                  DISPATCH
+                </text>
+                <text x="50" y="56" fill="#1d4ed8" fontSize="6.2" fontWeight="800" textAnchor="middle" letterSpacing="0.4" opacity="0.95">
+                  PASSED
+                </text>
+              </svg>
+            </div>
+
+            {/* Authentic Handwritten Cursive Signature Stroke Sample */}
+            <svg viewBox="0 0 170 52" className="inv-sig-svg" preserveAspectRatio="xMidYMid meet">
+              <path
+                d="M 12 36 C 20 25, 26 12, 38 10 C 46 8, 48 20, 42 32 C 35 42, 24 44, 30 28 C 36 16, 52 22, 62 26 C 72 30, 80 18, 92 20 C 104 22, 110 32, 122 28 C 134 24, 148 14, 160 20 C 168 24, 156 36, 138 34 C 118 32, 98 40, 78 42"
+                fill="none"
+                stroke="#1e3a8a"
+                strokeWidth="2.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M 42 30 C 60 27, 95 26, 135 28"
+                fill="none"
+                stroke="#1e3a8a"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+              />
+              <path
+                d="M 28 44 C 55 40, 105 38, 162 40"
+                fill="none"
+                stroke="#1e3a8a"
+                strokeWidth="1.6"
+                strokeLinecap="round"
+                opacity="0.8"
+              />
+            </svg>
+          </div>
+
           <div className="inv-sig-line"></div>
-          <div className="inv-sig-label">Authorized Signatory</div>
+          <div className="inv-sig-label">CATERING MANAGER</div>
+          <div className="inv-sig-sub">Silver Catering Services</div>
         </div>
       </div>
     </div>
   );
 }
+
 

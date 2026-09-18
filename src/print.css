@@ -37,6 +37,8 @@
   .form-card,
   .action-bar-container,
   .modal-backdrop,
+  .view-mode-tabs-wrap,
+  .a4-preview-toolbar,
   header,
   nav,
   button,
@@ -49,8 +51,14 @@
     width: 0 !important;
   }
 
+  /* Hide on-screen preview sheet during actual print so only the dedicated print container prints */
+  .screen-a4-preview-container,
+  .screen-a4-sheet {
+    display: none !important;
+  }
+
   /* Display printable formal statement - STRICT 1-PAGE CONTAINER */
-  .printable-statement {
+  #printable-statement {
     display: block !important;
     visibility: visible !important;
     width: 100% !important;
@@ -64,17 +72,19 @@
     page-break-after: avoid !important;
     break-after: avoid !important;
   }
+}
 
-  /* ========================================================
-     TOP HEADER: Dark Charcoal Banner with Wave
-     ======================================================== */
-  .inv-header-wrap {
-    position: relative;
-    width: 100%;
-    margin-bottom: 8pt;
-    page-break-inside: avoid;
-    break-inside: avoid;
-  }
+/* ========================================================
+   UNIVERSAL A4 DOCUMENT MODEL STYLES (Print & Screen Model)
+   ======================================================== */
+.inv-header-wrap {
+  position: relative;
+  width: 100%;
+  margin-bottom: 8pt;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
 
   .inv-header-dark {
     background-color: #23282c !important;
@@ -507,62 +517,110 @@
   }
 
   /* ========================================================
-     FOOTER: Thank You Note & Signature Line
+  /* ========================================================
+     FOOTER: Terms & Dual Signatures (Client + Sample Manager)
      ======================================================== */
   .inv-footer-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    padding: 6pt 4pt 0 4pt;
+    padding: 5pt 4pt 0 4pt;
     border-top: 0.5pt solid #e5e7eb;
     page-break-inside: avoid !important;
     break-inside: avoid !important;
     page-break-before: avoid !important;
     break-before: avoid !important;
+    gap: 10pt;
   }
 
-  .inv-footer-left {
-    max-width: 50%;
+  .inv-footer-sig-col {
+    width: 125pt;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+  }
+
+  .inv-footer-center {
+    flex: 1;
+    text-align: center;
+    padding: 0 4pt;
   }
 
   .inv-thanks-text {
-    font-size: 9.5pt;
+    font-size: 8.5pt;
     font-weight: 800;
     color: #111827;
     margin: 0 0 2pt 0;
   }
 
   .inv-terms-text {
-    font-size: 6.8pt;
+    font-size: 6pt;
     color: #6b7280;
-    line-height: 1.35;
+    line-height: 1.3;
     margin: 0;
   }
 
-  .inv-footer-right {
-    text-align: center;
-    width: 145pt;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  /* Client Signature Area */
+  .inv-sig-space {
+    height: 28pt;
+    width: 100%;
   }
 
-  .inv-sig-space {
-    height: 32pt;
+  /* Manager Signature Sample with Official Verification Stamp */
+  .inv-manager-signature-wrap {
+    height: 30pt;
     width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .inv-seal-stamp {
+    position: absolute;
+    right: -8pt;
+    top: -8pt;
+    width: 36pt;
+    height: 36pt;
+    opacity: 0.85;
+    transform: rotate(-6deg);
+    pointer-events: none;
+  }
+
+  .inv-seal-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .inv-sig-svg {
+    width: 105pt;
+    height: 28pt;
+    display: block;
+    position: relative;
+    z-index: 2;
   }
 
   .inv-sig-line {
     width: 100%;
     border-bottom: 1.2pt solid #1f2429;
-    margin-bottom: 4pt;
+    margin-bottom: 2.5pt;
   }
 
   .inv-sig-label {
-    font-size: 7.5pt;
-    font-weight: 700;
+    font-size: 7pt;
+    font-weight: 800;
     color: #1f2429;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
+    letter-spacing: 0.6px;
+    line-height: 1.2;
   }
-}
+
+  .inv-sig-sub {
+    font-size: 6pt;
+    font-weight: 600;
+    color: #6b7280;
+    line-height: 1.15;
+  }

@@ -1336,3 +1336,239 @@ body {
     width: 100%;
   }
 }
+
+/* ========================================================
+   VIEW MODE SWITCHER & SCREEN A4 DOCUMENT MODEL PREVIEW
+   ======================================================== */
+.view-mode-tabs-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0 6px 0;
+}
+
+.view-mode-tabs {
+  display: inline-flex;
+  background-color: #ede7dc;
+  padding: 4px;
+  border-radius: 30px;
+  border: 1px solid #dfd6c6;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.view-mode-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 22px;
+  border-radius: 25px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-mode-tab:hover {
+  color: var(--color-emerald-deep);
+}
+
+.view-mode-tab.active {
+  background-color: var(--color-emerald-deep);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(9, 38, 28, 0.25);
+}
+
+.screen-a4-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: 100%;
+  max-width: 860px;
+  margin: 0 auto;
+  animation: fadeIn 0.25s ease-out;
+}
+
+.a4-preview-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background: #ffffff;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  border: 1.5px solid var(--color-gold-mid);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toolbar-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.toolbar-badge {
+  background-color: var(--color-gold-light);
+  color: var(--color-gold-deep);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  border: 1px solid #ded2bb;
+}
+
+.toolbar-label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--color-text-main);
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-toolbar-print {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, var(--color-emerald-deep) 0%, var(--color-emerald-dark) 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(9, 38, 28, 0.2);
+  transition: all 0.2s ease;
+}
+
+.btn-toolbar-print:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(9, 38, 28, 0.25);
+}
+
+.btn-toolbar-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background-color: var(--color-gold-mid);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(197, 160, 89, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-toolbar-pdf:hover {
+  background-color: var(--color-gold-deep);
+  transform: translateY(-1px);
+}
+
+.btn-toolbar-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background-color: #f7f4ed;
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-toolbar-edit:hover {
+  background-color: #eee7d8;
+}
+
+/* The on-screen A4 sheet container */
+.screen-a4-sheet {
+  width: 100%;
+  max-width: 820px;
+  background: #ffffff !important;
+  border-radius: 4px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid #d1d5db;
+  margin: 0 auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1f2429;
+}
+
+/* Ensure on-screen signature and stamps render seamlessly */
+.screen-a4-sheet .inv-manager-signature-wrap {
+  height: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screen-a4-sheet .inv-seal-stamp {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 48px;
+  height: 48px;
+  opacity: 0.85;
+  transform: rotate(-6deg);
+  pointer-events: none;
+}
+
+.screen-a4-sheet .inv-sig-svg {
+  width: 140px;
+  height: 38px;
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+
+.screen-a4-sheet .inv-sig-line {
+  width: 100%;
+  border-bottom: 1.5px solid #1f2429;
+  margin-bottom: 4px;
+}
+
+.screen-a4-sheet .inv-sig-label {
+  font-size: 10px;
+  font-weight: 800;
+  color: #1f2429;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  line-height: 1.2;
+}
+
+.screen-a4-sheet .inv-sig-sub {
+  font-size: 9px;
+  font-weight: 600;
+  color: #6b7280;
+  line-height: 1.2;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
