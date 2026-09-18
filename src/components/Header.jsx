@@ -10,6 +10,14 @@ export default function Header({ onLoadDemo, onNewNote }) {
           <span className="crest-symbol">✦</span>
         </div>
 
+        <div className="brand-logo-wrap">
+          <img
+            src="/silver_catering_logo.png"
+            alt="Silver Catering Official Logo"
+            className="brand-official-logo"
+          />
+        </div>
+
         <h1 className="brand-title">SILVER CATERING SERVICES</h1>
         <div className="brand-divider">
           <span className="divider-line"></span>

@@ -122,6 +122,29 @@ body {
   font-size: 10px;
 }
 
+.brand-logo-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4px auto 10px auto;
+}
+
+.brand-official-logo {
+  height: 68px;
+  width: auto;
+  object-fit: contain;
+  background-color: #ffffff;
+  padding: 4px 12px;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.brand-official-logo:hover {
+  transform: scale(1.03);
+}
+
 .brand-title {
   font-family: var(--font-serif);
   font-size: clamp(26px, 4vw, 36px);

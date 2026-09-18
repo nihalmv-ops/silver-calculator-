@@ -12,21 +12,23 @@ export default function PrintableStatement({ details, items, totalPrice }) {
   return (
     <div className="printable-statement invoice-model-template" id="printable-statement">
       {/* ========================================================
-          TOP HEADER: Dark Charcoal Banner with Wave & Logo
+          TOP HEADER: Dark Charcoal Banner with Wave & Official Logo
           ======================================================== */}
       <div className="inv-header-wrap">
         <div className="inv-header-dark">
           <div className="inv-brand-row">
-            {/* Logo Mark + Name */}
+            {/* Official Website Logo + Brand Text */}
             <div className="inv-logo-group">
-              <svg className="inv-logo-mark" viewBox="0 0 44 44" width="38" height="38" fill="none">
-                <path d="M12 32 C12 18, 26 12, 36 8 C32 22, 24 32, 12 32 Z" fill="#f3b72c" />
-                <path d="M8 28 C8 17, 18 12, 26 9 C23 20, 16 28, 8 28 Z" fill="#e5a519" />
-                <path d="M18 38 C18 25, 30 18, 40 14 C36 29, 29 38, 18 38 Z" stroke="#ffffff" strokeWidth="1.8" />
-              </svg>
+              <div className="inv-logo-badge">
+                <img
+                  src="/silver_catering_logo.png"
+                  alt="Silver Catering Official Logo"
+                  className="inv-official-logo"
+                />
+              </div>
               <div className="inv-logo-text">
-                <span className="inv-logo-name">SILVER</span>
-                <span className="inv-logo-sub">CATERING SERVICES</span>
+                <span className="inv-logo-name">SILVER CATERING</span>
+                <span className="inv-logo-sub">PREMIUM WEDDING & EVENT SERVICES</span>
               </div>
             </div>
 
@@ -34,8 +36,8 @@ export default function PrintableStatement({ details, items, totalPrice }) {
             <div className="inv-contact-grid">
               <div className="inv-contact-col">
                 <span className="inv-contact-label">Phone:</span>
+                <span className="inv-contact-val">+91 98464 15767</span>
                 <span className="inv-contact-val">+91 98470 12345</span>
-                <span className="inv-contact-val">+91 98470 54321</span>
               </div>
               <div className="inv-contact-col">
                 <span className="inv-contact-label">Web:</span>
@@ -44,8 +46,8 @@ export default function PrintableStatement({ details, items, totalPrice }) {
               </div>
               <div className="inv-contact-col">
                 <span className="inv-contact-label">Area:</span>
-                <span className="inv-contact-val">Ernakulam, Kerala</span>
-                <span className="inv-contact-val">India, 682001</span>
+                <span className="inv-contact-val">Valanchery, Malappuram</span>
+                <span className="inv-contact-val">Kerala, 679572</span>
               </div>
             </div>
           </div>
