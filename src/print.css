@@ -490,34 +490,28 @@
 
   .inv-footer-right {
     text-align: center;
-    width: 140pt;
+    width: 145pt;
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .inv-sig-name {
-    font-size: 8pt;
+  .inv-sig-space {
+    height: 32pt;
+    width: 100%;
+  }
+
+  .inv-sig-line {
+    width: 100%;
+    border-bottom: 1.2pt solid #1f2429;
+    margin-bottom: 4pt;
+  }
+
+  .inv-sig-label {
+    font-size: 7.5pt;
     font-weight: 700;
-    color: #111827;
-    line-height: 1.1;
-  }
-
-  .inv-sig-role {
-    font-size: 6.8pt;
-    color: #6b7280;
-    margin-bottom: 1pt;
-  }
-
-  .inv-sig-svg {
-    display: block;
-    margin: 0 auto;
-  }
-
-  .inv-sig-tag {
-    font-size: 6.5pt;
-    color: #9ca3af;
+    color: #1f2429;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
   }
 }

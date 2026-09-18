@@ -173,15 +173,11 @@ export default function PrintableStatement({ details, items, totalPrice }) {
           </p>
         </div>
 
-        {/* Right: Handwritten Signature & Incharge Role */}
+        {/* Right: Empty Sign and Name Area */}
         <div className="inv-footer-right">
-          <div className="inv-sig-name">Thomas Daney</div>
-          <div className="inv-sig-role">Operations & Catering Manager</div>
-          <svg className="inv-sig-svg" viewBox="0 0 160 48" width="130" height="38" fill="none">
-            <path d="M15,28 Q35,8 55,26 T90,22 Q110,8 128,28 Q140,14 152,24" stroke="#1f2429" strokeWidth="2" strokeLinecap="round" />
-            <path d="M30,26 Q60,40 95,34 T145,30" stroke="#1f2429" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          <div className="inv-sig-tag">(Authorized Signatory)</div>
+          <div className="inv-sig-space"></div>
+          <div className="inv-sig-line"></div>
+          <div className="inv-sig-label">Authorized Signatory</div>
         </div>
       </div>
     </div>
