@@ -25,6 +25,14 @@ export default function Header({ onLoadDemo, onNewNote }) {
           <span className="divider-line"></span>
         </div>
         <p className="brand-subtitle">CATERING FOOD HANDOVER NOTE</p>
+        
+        <div className="header-manager-contact no-print">
+          <span className="mgr-badge-icon">📞</span>
+          <span className="mgr-badge-label">SILVER MANAGER:</span>
+          <a href="tel:+919846415767" className="mgr-badge-phone">+91 98464 15767</a>
+          <span className="mgr-badge-dot">•</span>
+          <span className="mgr-badge-location">Valanchery, Malappuram</span>
+        </div>
 
         <div className="header-actions no-print">
           <button

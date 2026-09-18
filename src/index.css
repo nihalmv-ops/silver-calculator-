@@ -187,6 +187,59 @@ body {
   text-transform: uppercase;
 }
 
+.header-manager-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 6px 16px;
+  border-radius: 20px;
+  margin-top: 10px;
+  font-size: 12.5px;
+  backdrop-filter: blur(4px);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.mgr-badge-icon {
+  font-size: 13px;
+}
+
+.mgr-badge-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: var(--color-gold-mid);
+  text-transform: uppercase;
+}
+
+.mgr-badge-phone {
+  font-size: 13.5px;
+  font-weight: 800;
+  color: #ffffff;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.mgr-badge-phone:hover {
+  color: var(--color-gold-accent);
+  text-decoration: underline;
+}
+
+.mgr-badge-dot {
+  color: var(--color-gold-mid);
+  opacity: 0.7;
+}
+
+.mgr-badge-location {
+  font-size: 12px;
+  color: #cfdcd6;
+  font-weight: 500;
+}
+
+
 .header-actions {
   display: flex;
   justify-content: center;
@@ -1511,32 +1564,10 @@ body {
   color: #1f2429;
 }
 
-/* Ensure on-screen signature and stamps render seamlessly */
-.screen-a4-sheet .inv-manager-signature-wrap {
-  height: 40px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.screen-a4-sheet .inv-seal-stamp {
-  position: absolute;
-  right: -10px;
-  top: -10px;
-  width: 48px;
-  height: 48px;
-  opacity: 0.85;
-  transform: rotate(-6deg);
-  pointer-events: none;
-}
-
-.screen-a4-sheet .inv-sig-svg {
-  width: 140px;
-  height: 38px;
-  display: block;
-  position: relative;
-  z-index: 2;
+/* Ensure on-screen signature areas render cleanly with empty signing space */
+.screen-a4-sheet .inv-sig-space {
+  height: 44px;
+  width: 100%;
 }
 
 .screen-a4-sheet .inv-sig-line {
@@ -1546,7 +1577,7 @@ body {
 }
 
 .screen-a4-sheet .inv-sig-label {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 800;
   color: #1f2429;
   text-transform: uppercase;
@@ -1555,11 +1586,20 @@ body {
 }
 
 .screen-a4-sheet .inv-sig-sub {
-  font-size: 9px;
+  font-size: 9.5px;
   font-weight: 600;
   color: #6b7280;
   line-height: 1.2;
 }
+
+.screen-a4-sheet .inv-sig-phone {
+  font-size: 9.5px;
+  font-weight: 800;
+  color: #1f2429;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
 
 @keyframes fadeIn {
   from {

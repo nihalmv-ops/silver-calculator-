@@ -562,55 +562,20 @@
     margin: 0;
   }
 
-  /* Client Signature Area */
+  /* Empty Signature Space for Real Hand Signing */
   .inv-sig-space {
-    height: 28pt;
+    height: 32pt;
     width: 100%;
-  }
-
-  /* Manager Signature Sample with Official Verification Stamp */
-  .inv-manager-signature-wrap {
-    height: 30pt;
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .inv-seal-stamp {
-    position: absolute;
-    right: -8pt;
-    top: -8pt;
-    width: 36pt;
-    height: 36pt;
-    opacity: 0.85;
-    transform: rotate(-6deg);
-    pointer-events: none;
-  }
-
-  .inv-seal-svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
-  .inv-sig-svg {
-    width: 105pt;
-    height: 28pt;
-    display: block;
-    position: relative;
-    z-index: 2;
   }
 
   .inv-sig-line {
     width: 100%;
     border-bottom: 1.2pt solid #1f2429;
-    margin-bottom: 2.5pt;
+    margin-bottom: 3pt;
   }
 
   .inv-sig-label {
-    font-size: 7pt;
+    font-size: 7.2pt;
     font-weight: 800;
     color: #1f2429;
     text-transform: uppercase;
@@ -619,8 +584,17 @@
   }
 
   .inv-sig-sub {
-    font-size: 6pt;
+    font-size: 6.2pt;
     font-weight: 600;
     color: #6b7280;
     line-height: 1.15;
   }
+
+  .inv-sig-phone {
+    font-size: 6.5pt;
+    font-weight: 800;
+    color: #1f2429;
+    line-height: 1.2;
+    margin-top: 1.5pt;
+  }
+

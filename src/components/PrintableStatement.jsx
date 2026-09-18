@@ -34,19 +34,19 @@ export default function PrintableStatement({ details, sections, totalItems, tota
             {/* Contact Details (3 Columns with Yellow Labels) */}
             <div className="inv-contact-grid">
               <div className="inv-contact-col">
-                <span className="inv-contact-label">Phone:</span>
-                <span className="inv-contact-val">+91 98464 15767</span>
-                <span className="inv-contact-val">+91 98470 12345</span>
+                <span className="inv-contact-label">Silver Manager:</span>
+                <span className="inv-contact-val font-bold">+91 98464 15767</span>
+                <span className="inv-contact-val">Dispatch & Booking</span>
               </div>
               <div className="inv-contact-col">
-                <span className="inv-contact-label">Web:</span>
-                <span className="inv-contact-val">info@silvercatering.in</span>
+                <span className="inv-contact-label">Email & Web:</span>
+                <span className="inv-contact-val">Silvereventsandcaters@gmail.com</span>
                 <span className="inv-contact-val">www.silvercatering.in</span>
               </div>
               <div className="inv-contact-col">
-                <span className="inv-contact-label">Area:</span>
-                <span className="inv-contact-val">Valanchery, Malappuram</span>
-                <span className="inv-contact-val">Kerala, 679572</span>
+                <span className="inv-contact-label">Area / Location:</span>
+                <span className="inv-contact-val">Mecheriparambu, Irimbiliyam</span>
+                <span className="inv-contact-val">Valanchery, Kerala 679572</span>
               </div>
             </div>
           </div>
@@ -184,10 +184,10 @@ export default function PrintableStatement({ details, sections, totalItems, tota
       </div>
 
       {/* ========================================================
-          FOOTER: Terms & Dual Signatures (Client + Sample Manager)
+          FOOTER: Terms & Dual Signatures (Both Empty for Hand Signing)
           ======================================================== */}
       <div className="inv-footer-row">
-        {/* Left: Client / Receiver Signature */}
+        {/* Left: Client / Receiver Signature (Empty Space) */}
         <div className="inv-footer-sig-col inv-client-sig-col">
           <div className="inv-sig-space"></div>
           <div className="inv-sig-line"></div>
@@ -203,68 +203,16 @@ export default function PrintableStatement({ details, sections, totalItems, tota
           </p>
         </div>
 
-        {/* Right: Manager Signature Sample with Official Verification Stamp */}
+        {/* Right: Catering Manager with Empty Signature Space & Real Manager Number */}
         <div className="inv-footer-sig-col inv-manager-sig-col">
-          <div className="inv-manager-signature-wrap">
-            {/* Official Circular Verification Stamp */}
-            <div className="inv-seal-stamp" title="Official Dispatch Verification Seal">
-              <svg viewBox="0 0 100 100" className="inv-seal-svg">
-                <circle cx="50" cy="50" r="46" fill="none" stroke="#1d4ed8" strokeWidth="2.2" strokeDasharray="3 2" opacity="0.85" />
-                <circle cx="50" cy="50" r="41" fill="none" stroke="#1d4ed8" strokeWidth="1" opacity="0.85" />
-                <path id="sealPathTop" d="M 17,50 A 33,33 0 1,1 83,50" fill="none" />
-                <path id="sealPathBot" d="M 83,50 A 33,33 0 0,1 17,50" fill="none" />
-                <text fill="#1d4ed8" fontSize="6" fontWeight="800" letterSpacing="0.8" opacity="0.9">
-                  <textPath href="#sealPathTop" startOffset="50%" textAnchor="middle">
-                    SILVER CATERING SERVICES
-                  </textPath>
-                </text>
-                <text fill="#1d4ed8" fontSize="5" fontWeight="700" letterSpacing="0.6" opacity="0.9">
-                  <textPath href="#sealPathBot" startOffset="50%" textAnchor="middle">
-                    ★ VERIFIED & APPROVED ★
-                  </textPath>
-                </text>
-                <text x="50" y="46" fill="#1d4ed8" fontSize="7.2" fontWeight="900" textAnchor="middle" letterSpacing="0.6" opacity="0.95">
-                  DISPATCH
-                </text>
-                <text x="50" y="56" fill="#1d4ed8" fontSize="6.2" fontWeight="800" textAnchor="middle" letterSpacing="0.4" opacity="0.95">
-                  PASSED
-                </text>
-              </svg>
-            </div>
-
-            {/* Authentic Handwritten Cursive Signature Stroke Sample */}
-            <svg viewBox="0 0 170 52" className="inv-sig-svg" preserveAspectRatio="xMidYMid meet">
-              <path
-                d="M 12 36 C 20 25, 26 12, 38 10 C 46 8, 48 20, 42 32 C 35 42, 24 44, 30 28 C 36 16, 52 22, 62 26 C 72 30, 80 18, 92 20 C 104 22, 110 32, 122 28 C 134 24, 148 14, 160 20 C 168 24, 156 36, 138 34 C 118 32, 98 40, 78 42"
-                fill="none"
-                stroke="#1e3a8a"
-                strokeWidth="2.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M 42 30 C 60 27, 95 26, 135 28"
-                fill="none"
-                stroke="#1e3a8a"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-              />
-              <path
-                d="M 28 44 C 55 40, 105 38, 162 40"
-                fill="none"
-                stroke="#1e3a8a"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                opacity="0.8"
-              />
-            </svg>
-          </div>
-
+          <div className="inv-sig-space"></div>
           <div className="inv-sig-line"></div>
           <div className="inv-sig-label">CATERING MANAGER</div>
           <div className="inv-sig-sub">Silver Catering Services</div>
+          <div className="inv-sig-phone">Mob: +91 98464 15767</div>
         </div>
       </div>
+
     </div>
   );
 }
