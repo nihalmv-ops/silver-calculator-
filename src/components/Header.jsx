@@ -3,101 +3,105 @@ import {
   FileTextIcon,
   ReceiptIcon,
   PlusIcon,
-  UtensilsIcon
+  UtensilsIcon,
+  FolderIcon
 } from './icons';
 
 export default function Header({
   activeView,
   onNavigate,
+  onNewQuotation,
   totalQuotesCount = 0,
   totalInvoicesCount = 0
 }) {
+  const isHome = activeView === 'recent';
+  const isQuotation = activeView === 'quotation_form' || activeView === 'quotation_preview';
+  const isInvoice = activeView === 'invoice_form' || activeView === 'invoice_preview';
+  const isHandover = activeView === 'handover';
+
   return (
-    <header className="app-header">
-      <div className="header-inner">
-        {/* Brand Crest */}
-        <div className="brand-crest">
-          <span className="crest-symbol">✦</span>
-          <span className="brand-badge">EST. 2010 • KERALA PREMIUM CATERING</span>
-          <span className="crest-symbol">✦</span>
-        </div>
+    <header className="luxury-app-header app-header no-print">
+      <div className="luxury-header-inner header-inner">
+        {/* Left: Brand Identity */}
+        <button
+          type="button"
+          className="brand-identity-btn"
+          onClick={() => onNavigate('recent')}
+          title="Go to Catering Documents Workspace"
+        >
+          <div className="brand-logo-frame">
+            <img
+              src="/silver_catering_logo.png"
+              alt="Silver Catering"
+              className="brand-header-logo"
+            />
+          </div>
+          <div className="brand-text-block">
+            <h1 className="brand-company-title">SILVER CATERING</h1>
+            <span className="brand-tagline">Catering • Events • Hospitality</span>
+          </div>
+        </button>
 
-        {/* Brand Logo */}
-        <div className="brand-logo-wrap">
-          <img
-            src="/silver_catering_logo.png"
-            alt="Silver Catering Official Logo"
-            className="brand-official-logo"
-          />
-        </div>
-
-        <h1 className="brand-title">SILVER CATERING SERVICES</h1>
-        <div className="brand-divider">
-          <span className="divider-line"></span>
-          <span className="divider-motif">❧ ✤ ☙</span>
-          <span className="divider-line"></span>
-        </div>
-        <p className="brand-subtitle">Premium Catering Services for Weddings & Events</p>
-
-        {/* Manager Contact Bar */}
-        <div className="header-manager-contact no-print">
-          <span className="mgr-badge-icon">📞</span>
-          <span className="mgr-badge-label">SILVER MANAGER:</span>
-          <a href="tel:+919846415767" className="mgr-badge-phone">+91 98464 15767</a>
-          <span className="mgr-badge-dot">•</span>
-          <span className="mgr-badge-location">Valanchery, Malappuram, Kerala</span>
-        </div>
-
-        {/* Primary Navigation Bar */}
-        <nav className="header-nav-bar no-print">
-          <div className="nav-buttons-cluster">
-            {/* New Quotation */}
+        {/* Right: Navigation & Actions */}
+        <div className="header-cta-cluster">
+          <nav className="header-nav-menu">
             <button
               type="button"
-              className={`nav-btn ${activeView === 'quotation_form' ? 'active' : ''}`}
-              onClick={() => onNavigate('quotation_form')}
-            >
-              <PlusIcon className="w-4 h-4" />
-              <span>+ New Quotation</span>
-            </button>
-
-            {/* Create Invoice */}
-            <button
-              type="button"
-              className={`nav-btn ${activeView === 'invoice_form' ? 'active' : ''}`}
-              onClick={() => onNavigate('invoice_form')}
-            >
-              <ReceiptIcon className="w-4 h-4" />
-              <span>Create Invoice</span>
-            </button>
-
-            {/* Recent Documents */}
-            <button
-              type="button"
-              className={`nav-btn nav-btn-recent ${activeView === 'recent' ? 'active' : ''}`}
+              className={`header-nav-btn ${isHome ? 'is-active' : ''}`}
               onClick={() => onNavigate('recent')}
+              title="Catering Documents Workspace"
+            >
+              <FolderIcon className="w-4 h-4" />
+              <span>Workspace</span>
+            </button>
+
+            <button
+              type="button"
+              className={`header-nav-btn ${isQuotation ? 'is-active' : ''}`}
+              onClick={() => onNavigate('quotation_form')}
+              title="Quotation Builder"
             >
               <FileTextIcon className="w-4 h-4" />
-              <span>Recent Documents</span>
-              {(totalQuotesCount > 0 || totalInvoicesCount > 0) && (
-                <span className="nav-count-badge">
-                  {totalQuotesCount + totalInvoicesCount}
-                </span>
+              <span>Quotations</span>
+              {totalQuotesCount > 0 && (
+                <span className="nav-counter-pill">{totalQuotesCount}</span>
               )}
             </button>
 
-            {/* Food Handover Note (Preserved) */}
             <button
               type="button"
-              className={`nav-btn nav-btn-handover ${activeView === 'handover' ? 'active' : ''}`}
+              className={`header-nav-btn ${isInvoice ? 'is-active' : ''}`}
+              onClick={() => onNavigate('invoice_form')}
+              title="Invoice Builder"
+            >
+              <ReceiptIcon className="w-4 h-4" />
+              <span>Invoices</span>
+              {totalInvoicesCount > 0 && (
+                <span className="nav-counter-pill">{totalInvoicesCount}</span>
+              )}
+            </button>
+
+            <button
+              type="button"
+              className={`header-nav-btn ${isHandover ? 'is-active' : ''}`}
               onClick={() => onNavigate('handover')}
               title="Food Handover Dispatch Note"
             >
               <UtensilsIcon className="w-3.5 h-3.5" />
-              <span>Handover Note</span>
+              <span>Handover</span>
             </button>
-          </div>
-        </nav>
+          </nav>
+
+          {/* Primary Action Button */}
+          <button
+            type="button"
+            className="btn-header-primary"
+            onClick={onNewQuotation || (() => onNavigate('quotation_form'))}
+          >
+            <PlusIcon className="w-4 h-4" />
+            <span>+ New Quotation</span>
+          </button>
+        </div>
       </div>
     </header>
   );

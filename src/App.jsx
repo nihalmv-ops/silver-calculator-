@@ -58,7 +58,7 @@ import { openWhatsAppShare } from './utils/whatsapp';
 
 export default function App() {
   // Views: 'quotation_form' | 'quotation_preview' | 'invoice_form' | 'invoice_preview' | 'recent' | 'handover'
-  const [activeView, setActiveView] = useState('quotation_form');
+  const [activeView, setActiveView] = useState('recent');
 
   // Quotation & Invoice storage states
   const [quotations, setQuotations] = useState(() => getQuotations());
@@ -414,6 +414,7 @@ export default function App() {
       <Header
         activeView={activeView}
         onNavigate={(view) => setActiveView(view)}
+        onNewQuotation={handleNewQuotation}
         totalQuotesCount={quotations.length}
         totalInvoicesCount={invoices.length}
       />
@@ -501,6 +502,7 @@ export default function App() {
             <ServiceSelector
               eventGuests={computedQuotation.guests}
               onAddService={handleAddQuotationService}
+              items={computedQuotation.items}
             />
 
             {/* Section D: Services Items Table */}
@@ -654,6 +656,7 @@ export default function App() {
             <ServiceSelector
               eventGuests={computedInvoice.guests}
               onAddService={handleAddInvoiceService}
+              items={computedInvoice.items}
             />
 
             {/* Section D: Services Items Table */}

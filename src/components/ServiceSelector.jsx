@@ -1,8 +1,8 @@
 import React from 'react';
 import { PRESET_SERVICES } from '../utils/storage';
-import { UtensilsIcon, PlusIcon } from './icons';
+import { PlusIcon, CheckIcon } from './icons';
 
-export default function ServiceSelector({ onAddService, eventGuests }) {
+export default function ServiceSelector({ onAddService, eventGuests, items = [] }) {
   const handleQuickAdd = (preset) => {
     const qty = preset.defaultUnit === 'Fixed' ? '1' : (eventGuests || '500');
     onAddService({
@@ -22,42 +22,47 @@ export default function ServiceSelector({ onAddService, eventGuests }) {
     });
   };
 
+  const isPresetSelected = (presetName) => {
+    return items.some(
+      (it) => it.name && it.name.trim().toLowerCase() === presetName.toLowerCase()
+    );
+  };
+
   return (
-    <div className="service-selector-container">
-      <div className="service-selector-header">
-        <div className="flex items-center gap-2">
-          <UtensilsIcon className="w-4 h-4 text-emerald-800" />
-          <span className="text-sm font-semibold text-emerald-950 uppercase tracking-wide">
-            Quick-Add Catering Services / Functions:
-          </span>
-        </div>
-        <span className="text-xs text-emerald-700 italic">
-          Click any button to add to pricing table below
-        </span>
+    <div className="service-quick-selector">
+      <div className="selector-title-row">
+        <span className="selector-label">Quick-Add Catering Services:</span>
+        <span className="selector-hint">Click to itemize in pricing table</span>
       </div>
 
       <div className="quick-service-buttons">
-        {PRESET_SERVICES.map((preset) => (
-          <button
-            key={preset.name}
-            type="button"
-            className="btn-quick-service"
-            onClick={() => handleQuickAdd(preset)}
-            title={`Add ${preset.name} (${preset.defaultUnit} @ ₹${preset.defaultRate})`}
-          >
-            <span className="preset-icon">{preset.icon || '🍽️'}</span>
-            <span className="preset-name">{preset.name}</span>
-            <span className="quick-service-rate-hint">₹{preset.defaultRate}</span>
-          </button>
-        ))}
+        {PRESET_SERVICES.map((preset) => {
+          const selected = isPresetSelected(preset.name);
+          return (
+            <button
+              key={preset.name}
+              type="button"
+              className={`btn-service-outline ${selected ? 'is-selected' : ''}`}
+              onClick={() => handleQuickAdd(preset)}
+              title={selected ? `${preset.name} added. Click to add another row.` : `Add ${preset.name}`}
+            >
+              {selected ? (
+                <CheckIcon className="w-3.5 h-3.5 text-neutral-900 stroke-[2.5]" />
+              ) : (
+                <PlusIcon className="w-3.5 h-3.5 text-neutral-500" />
+              )}
+              <span>{preset.name}</span>
+            </button>
+          );
+        })}
 
         <button
           type="button"
-          className="btn-quick-service btn-custom-service"
+          className="btn-service-outline btn-custom-outline"
           onClick={handleAddCustom}
         >
-          <PlusIcon className="w-4 h-4 text-emerald-600" />
-          <span>+ Custom Service</span>
+          <PlusIcon className="w-3.5 h-3.5" />
+          <span>Custom Service</span>
         </button>
       </div>
     </div>

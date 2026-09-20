@@ -7,14 +7,12 @@ export default function CustomerForm({ details, onChange, errors = {} }) {
   };
 
   return (
-    <section className="form-card">
-      <div className="section-header-banner">
-        <div className="section-icon-bubble">
-          <UserIcon className="w-5 h-5 text-emerald-800" />
-        </div>
-        <div>
-          <h2 className="section-title">SECTION A: CUSTOMER DETAILS</h2>
-          <p className="section-subtitle">Primary client and billing information</p>
+    <section className="form-section-card">
+      <div className="section-head-banner">
+        <span className="section-step-badge">01</span>
+        <div className="section-head-text">
+          <h2 className="section-title">CUSTOMER DETAILS</h2>
+          <p className="section-subtitle">Enter the customer's basic contact and billing information.</p>
         </div>
       </div>
 
@@ -22,7 +20,7 @@ export default function CustomerForm({ details, onChange, errors = {} }) {
         {/* Customer Name */}
         <div className="input-group">
           <label className="input-label" htmlFor="customer-name">
-            <UserIcon className="w-4 h-4 text-emerald-700" />
+            <UserIcon className="w-4 h-4 text-neutral-500" />
             <span>Customer Name <span className="text-red-500">*</span></span>
           </label>
           <input
@@ -42,7 +40,7 @@ export default function CustomerForm({ details, onChange, errors = {} }) {
         {/* Phone Number */}
         <div className="input-group">
           <label className="input-label" htmlFor="customer-phone">
-            <PhoneIcon className="w-4 h-4 text-emerald-700" />
+            <PhoneIcon className="w-4 h-4 text-neutral-500" />
             <span>Phone Number <span className="text-red-500">*</span></span>
           </label>
           <input
@@ -62,8 +60,8 @@ export default function CustomerForm({ details, onChange, errors = {} }) {
         {/* Email Address */}
         <div className="input-group">
           <label className="input-label" htmlFor="customer-email">
-            <MailIcon className="w-4 h-4 text-emerald-700" />
-            <span>Email Address <span className="text-muted">(Optional)</span></span>
+            <MailIcon className="w-4 h-4 text-neutral-500" />
+            <span>Email Address <span className="text-neutral-400 font-normal">(Optional)</span></span>
           </label>
           <input
             id="customer-email"
@@ -75,17 +73,17 @@ export default function CustomerForm({ details, onChange, errors = {} }) {
           />
         </div>
 
-        {/* Address / City */}
+        {/* Address */}
         <div className="input-group">
           <label className="input-label" htmlFor="customer-address">
-            <MapPinIcon className="w-4 h-4 text-emerald-700" />
+            <MapPinIcon className="w-4 h-4 text-neutral-500" />
             <span>Address / City</span>
           </label>
           <input
             id="customer-address"
             type="text"
             className="input-field"
-            placeholder="e.g. Kadavanthra, Kochi, Ernakulam"
+            placeholder="e.g. Valanchery, Malappuram"
             value={details.customerAddress || ''}
             onChange={(e) => handleChange('customerAddress', e.target.value)}
           />

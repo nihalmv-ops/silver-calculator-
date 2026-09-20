@@ -43,11 +43,14 @@ export default function PaymentSummary({
   };
 
   return (
-    <section className="form-card payment-summary-card">
-      <div className="section-header-banner flex justify-between items-center">
-        <div>
-          <h2 className="section-title">SECTION F: INVOICE PAYMENT DETAILS</h2>
-          <p className="section-subtitle">Real-time reconciliation of client deposits and balance due</p>
+    <section className="form-section-card payment-summary-card">
+      <div className="section-head-banner flex justify-between items-center">
+        <div className="flex items-center gap-3">
+          <span className="section-step-badge">06</span>
+          <div className="section-head-text">
+            <h2 className="section-title">INVOICE PAYMENT RECONCILIATION</h2>
+            <p className="section-subtitle">Real-time status of deposits received and remaining balance.</p>
+          </div>
         </div>
         <div className="status-badge-container">
           {getStatusBadge()}
@@ -64,13 +67,13 @@ export default function PaymentSummary({
         {/* Advance Paid */}
         <div className="payment-metric-card">
           <span className="metric-label">Advance Received</span>
-          <span className="metric-value font-mono text-emerald-800">{formatINR(adv)}</span>
+          <span className="metric-value font-mono text-neutral-900">{formatINR(adv)}</span>
         </div>
 
         {/* Balance Due */}
-        <div className={`payment-metric-card ${balance > 0 ? 'bg-amber-50' : 'bg-green-50'}`}>
+        <div className={`payment-metric-card ${balance > 0 ? 'metric-balance-due' : 'metric-balance-zero'}`}>
           <span className="metric-label">Remaining Balance Due</span>
-          <span className={`metric-value font-mono ${balance > 0 ? 'text-amber-900' : 'text-emerald-700'}`}>
+          <span className="metric-value font-mono">
             {formatINR(balance)}
           </span>
         </div>
@@ -80,7 +83,7 @@ export default function PaymentSummary({
         {/* Payment Method */}
         <div className="input-group">
           <label className="input-label" htmlFor="payment-method">
-            <TagIcon className="w-4 h-4 text-emerald-700" />
+            <TagIcon className="w-4 h-4 text-neutral-500" />
             <span>Payment Method</span>
           </label>
           <select
@@ -100,7 +103,7 @@ export default function PaymentSummary({
         {/* Transaction Notes / Ref ID */}
         <div className="input-group">
           <label className="input-label" htmlFor="transaction-notes">
-            <span className="font-semibold text-emerald-800">📝</span>
+            <ClockIcon className="w-4 h-4 text-neutral-500" />
             <span>Transaction ID / Payment Notes</span>
           </label>
           <input

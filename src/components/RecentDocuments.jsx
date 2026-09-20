@@ -78,110 +78,134 @@ export default function RecentDocuments({
     }
   };
 
+  // Compute statistics
+  const totalPendingAmount = useMemo(() => {
+    return invoices.reduce((sum, inv) => {
+      return sum + (parseFloat(inv.balanceDue) || 0);
+    }, 0);
+  }, [invoices]);
+
   return (
-    <section className="recent-docs-container">
-      {/* Search & Filter Header Bar */}
-      <div className="recent-docs-header">
-        <div className="recent-header-top">
-          <div>
-            <h2 className="text-xl font-bold text-emerald-950 flex items-center gap-2">
-              <FileTextIcon className="w-5 h-5 text-emerald-800" />
-              <span>Catering Documents Dashboard</span>
-            </h2>
-            <p className="text-xs text-emerald-800">
-              Manage saved quotations, tax invoices, and client billing records
+    <div className="workspace-container">
+      {/* Main Workspace Header & Actions */}
+      <div className="workspace-header-card">
+        <div className="workspace-hero-row">
+          <div className="workspace-title-block">
+            <h1 className="workspace-main-title">Catering Documents</h1>
+            <p className="workspace-subtitle">
+              Create and manage professional quotations and invoices.
             </p>
           </div>
 
-          <div className="header-quick-create-btns">
+          <div className="workspace-action-cluster">
             <button
               type="button"
-              className="btn-create-quote-sm"
+              className="btn-workspace-primary"
               onClick={onNewQuotation}
             >
               <PlusIcon className="w-4 h-4" />
-              <span>+ New Quotation</span>
+              <span>+ Create New Quotation</span>
             </button>
             <button
               type="button"
-              className="btn-create-invoice-sm"
+              className="btn-workspace-secondary"
               onClick={onNewInvoice}
             >
               <ReceiptIcon className="w-4 h-4" />
-              <span>+ Create Invoice</span>
+              <span>Create Invoice</span>
             </button>
           </div>
         </div>
 
-        <div className="filter-and-search-bar">
-          {/* Tabs */}
-          <div className="doc-filter-tabs">
-            <button
-              type="button"
-              className={`filter-tab ${activeFilter === 'all' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('all')}
-            >
-              All Documents ({allDocs.length})
-            </button>
-            <button
-              type="button"
-              className={`filter-tab ${activeFilter === 'quotations' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('quotations')}
-            >
-              Quotations ({quotations.length})
-            </button>
-            <button
-              type="button"
-              className={`filter-tab ${activeFilter === 'invoices' ? 'active' : ''}`}
-              onClick={() => setActiveFilter('invoices')}
-            >
-              Invoices ({invoices.length})
-            </button>
+        {/* Small Elegant Document Statistics (Minimal, Not Colorful Cards) */}
+        <div className="workspace-stats-strip">
+          <div className="stat-block">
+            <span className="stat-label">Quotations</span>
+            <span className="stat-num">{quotations.length}</span>
           </div>
+          <div className="stat-divider"></div>
+          <div className="stat-block">
+            <span className="stat-label">Invoices</span>
+            <span className="stat-num">{invoices.length}</span>
+          </div>
+          <div className="stat-divider"></div>
+          <div className="stat-block">
+            <span className="stat-label">Pending Amount</span>
+            <span className="stat-num font-mono">{formatINR(totalPendingAmount)}</span>
+          </div>
+        </div>
+      </div>
 
-          {/* Search Box */}
-          <div className="search-input-wrap">
-            <SearchIcon className="w-4 h-4 search-icon" />
-            <input
-              type="text"
-              placeholder="Search by customer name, event, phone, or number..."
-              className="search-input"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            {searchQuery && (
-              <button
-                type="button"
-                className="search-clear-btn"
-                onClick={() => setSearchQuery('')}
-              >
-                ✕
-              </button>
-            )}
-          </div>
+      {/* Filter Tabs & Search Bar */}
+      <div className="workspace-filter-toolbar">
+        <div className="doc-filter-tabs">
+          <button
+            type="button"
+            className={`filter-tab ${activeFilter === 'all' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('all')}
+          >
+            All Documents ({allDocs.length})
+          </button>
+          <button
+            type="button"
+            className={`filter-tab ${activeFilter === 'quotations' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('quotations')}
+          >
+            Quotations ({quotations.length})
+          </button>
+          <button
+            type="button"
+            className={`filter-tab ${activeFilter === 'invoices' ? 'active' : ''}`}
+            onClick={() => setActiveFilter('invoices')}
+          >
+            Invoices ({invoices.length})
+          </button>
+        </div>
+
+        {/* Search Box */}
+        <div className="search-input-wrap">
+          <SearchIcon className="w-4 h-4 search-icon" />
+          <input
+            type="text"
+            placeholder="Search by customer, event, phone, or number..."
+            className="search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          {searchQuery && (
+            <button
+              type="button"
+              className="search-clear-btn"
+              onClick={() => setSearchQuery('')}
+            >
+              ✕
+            </button>
+          )}
         </div>
       </div>
 
       {/* Documents List */}
       {filteredDocs.length === 0 ? (
-        <div className="empty-docs-card">
-          <FileTextIcon className="w-12 h-12 text-emerald-300 mx-auto mb-3" />
-          <h3 className="text-base font-bold text-gray-700">No Documents Found</h3>
-          <p className="text-xs text-gray-500 max-w-md mx-auto mt-1 mb-4">
-            {searchQuery
-              ? `No matching records found for "${searchQuery}". Try clearing search.`
-              : 'You have no saved quotations or invoices in this view. Create one below to get started.'}
-          </p>
-          <div className="flex justify-center gap-3">
-            <button
-              type="button"
-              className="btn-toolbar-action btn-convert-invoice"
-              onClick={onNewQuotation}
-            >
-              <PlusIcon className="w-4 h-4" />
-              <span>Create First Quotation</span>
-            </button>
+        <div className="empty-workspace-state">
+          <div className="empty-icon-wrap">
+            <FileTextIcon className="w-8 h-8 text-neutral-400" />
           </div>
+          <h3 className="empty-title">
+            {searchQuery ? 'No matching documents' : 'No quotations yet'}
+          </h3>
+          <p className="empty-desc">
+            {searchQuery
+              ? `No records found matching "${searchQuery}". Try clearing search filter.`
+              : 'Create your first professional catering quotation.'}
+          </p>
+          <button
+            type="button"
+            className="btn-workspace-primary mt-2"
+            onClick={onNewQuotation}
+          >
+            <PlusIcon className="w-4 h-4" />
+            <span>+ Create Quotation</span>
+          </button>
         </div>
       ) : (
         <div className="documents-cards-grid">
@@ -200,23 +224,24 @@ export default function RecentDocuments({
                 </div>
 
                 <div className="card-client-info">
-                  <h3 className="card-client-name">{doc.customerName || 'Unnamed Client'}</h3>
+                  <h3 className="card-client-name">{doc.customerName || 'Unnamed Customer'}</h3>
                   <p className="card-event-name">{doc.eventName || 'Catering Function'}</p>
                   <p className="card-sub-info">
-                    <span>📅 {formatDate(doc.eventDate)}</span>
-                    {doc.guests && <span>• 👥 {doc.guests} Pax</span>}
+                    <span>{formatDate(doc.eventDate)}</span>
+                    {doc.guests && <span>• {doc.guests} Guests</span>}
+                    {doc.customerPhone && <span>• {doc.customerPhone}</span>}
                   </p>
                 </div>
 
                 <div className="card-financial-row">
                   <div>
-                    <span className="card-amount-label">Grand Total</span>
+                    <span className="card-amount-label">Total Amount</span>
                     <p className="card-amount-value font-mono">{formatINR(doc.grandTotal || 0)}</p>
                   </div>
                   {!isQuote && (
                     <div className="text-right">
                       <span className="card-amount-label">Balance Due</span>
-                      <p className={`card-balance-value font-mono ${doc.balanceDue > 0 ? 'text-amber-700 font-bold' : 'text-emerald-700'}`}>
+                      <p className={`card-balance-value font-mono ${doc.balanceDue > 0 ? 'text-amber-900 font-bold' : 'text-neutral-700'}`}>
                         {formatINR(doc.balanceDue || 0)}
                       </p>
                     </div>
@@ -229,9 +254,9 @@ export default function RecentDocuments({
                     type="button"
                     className="card-action-btn btn-view"
                     onClick={() => (isQuote ? onViewQuotation(doc.id) : onViewInvoice(doc.id))}
-                    title="View A4 Preview"
+                    title="View Document Preview"
                   >
-                    <EyeIcon className="w-4 h-4" />
+                    <EyeIcon className="w-3.5 h-3.5" />
                     <span>View</span>
                   </button>
 
@@ -242,7 +267,7 @@ export default function RecentDocuments({
                     onClick={() => (isQuote ? onEditQuotation(doc.id) : onEditInvoice(doc.id))}
                     title="Edit Document"
                   >
-                    <EditIcon className="w-4 h-4" />
+                    <EditIcon className="w-3.5 h-3.5" />
                     <span>Edit</span>
                   </button>
 
@@ -253,7 +278,8 @@ export default function RecentDocuments({
                     onClick={() => openWhatsAppShare(doc, !isQuote)}
                     title="Share via WhatsApp"
                   >
-                    <WhatsAppIcon className="w-4 h-4" />
+                    <WhatsAppIcon className="w-3.5 h-3.5" />
+                    <span>WhatsApp</span>
                   </button>
 
                   {/* Convert to Invoice for Quotes */}
@@ -262,10 +288,10 @@ export default function RecentDocuments({
                       type="button"
                       className="card-action-btn btn-convert"
                       onClick={() => onConvertQuotation(doc)}
-                      title="Convert to Invoice"
+                      title="Convert to Tax Invoice"
                     >
-                      <ReceiptIcon className="w-4 h-4" />
-                      <span>Convert</span>
+                      <ReceiptIcon className="w-3.5 h-3.5" />
+                      <span>To Invoice</span>
                     </button>
                   )}
 
@@ -276,7 +302,7 @@ export default function RecentDocuments({
                     onClick={() => (isQuote ? onDeleteQuotation(doc.id) : onDeleteInvoice(doc.id))}
                     title="Delete Document"
                   >
-                    <TrashIcon className="w-4 h-4" />
+                    <TrashIcon className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>
@@ -284,6 +310,6 @@ export default function RecentDocuments({
           })}
         </div>
       )}
-    </section>
+    </div>
   );
 }

@@ -23,20 +23,18 @@ export default function TotalsSection({
   };
 
   return (
-    <section className="form-card totals-card">
-      <div className="section-header-banner">
-        <div className="section-icon-bubble">
-          <span className="font-bold text-emerald-800 text-lg">₹</span>
+    <div className="totals-two-panel-grid">
+      {/* Left Column: Section 04 PRICING & DISCOUNTS */}
+      <section className="form-section-card">
+        <div className="section-head-banner">
+          <span className="section-step-badge">04</span>
+          <div className="section-head-text">
+            <h2 className="section-title">PRICING & DISCOUNTS</h2>
+            <p className="section-subtitle">Configure adjustments, taxes, and deposit parameters.</p>
+          </div>
         </div>
-        <div>
-          <h2 className="section-title">SECTION E: CALCULATION & TOTALS</h2>
-          <p className="section-subtitle">Subtotals, discounts, tax configurations, and balances</p>
-        </div>
-      </div>
 
-      <div className="totals-content-grid">
-        {/* Left Column: Adjustments (Discount & Tax) */}
-        <div className="totals-controls-col">
+        <div className="totals-controls-stack">
           {/* Discount Block */}
           <div className="control-card">
             <div className="control-card-header">
@@ -65,15 +63,15 @@ export default function TotalsSection({
                   type="number"
                   min="0"
                   step="any"
-                  className="input-field pl-8"
+                  className="input-field pl-8 font-mono"
                   placeholder={discountType === 'flat' ? '5000' : '5'}
                   value={discountValue || ''}
                   onChange={(e) => handleUpdate('discountValue', e.target.value)}
                 />
               </div>
               {discountAmount > 0 && (
-                <p className="text-xs text-emerald-700 mt-1 font-medium">
-                  Discount applied: -{formatINR(discountAmount)}
+                <p className="text-xs text-neutral-600 mt-1.5 font-medium">
+                  Discount deduction: -{formatINR(discountAmount)}
                 </p>
               )}
             </div>
@@ -82,17 +80,15 @@ export default function TotalsSection({
           {/* GST / Tax Toggle Block */}
           <div className="control-card">
             <div className="control-card-header">
-              <div className="flex items-center gap-2">
-                <label className="switch-label">
-                  <input
-                    type="checkbox"
-                    checked={taxEnabled}
-                    onChange={(e) => handleUpdate('taxEnabled', e.target.checked)}
-                    className="checkbox-custom"
-                  />
-                  <span className="control-title">Apply GST / Tax</span>
-                </label>
-              </div>
+              <label className="switch-label">
+                <input
+                  type="checkbox"
+                  checked={taxEnabled}
+                  onChange={(e) => handleUpdate('taxEnabled', e.target.checked)}
+                  className="checkbox-custom"
+                />
+                <span className="control-title">Apply GST / Tax</span>
+              </label>
 
               {taxEnabled && (
                 <div className="tax-rate-chips">
@@ -111,16 +107,16 @@ export default function TotalsSection({
             </div>
             <div className="control-card-body">
               {taxEnabled ? (
-                <p className="text-xs text-emerald-800">
+                <p className="text-xs text-neutral-600">
                   GST of {gstPercent}% on taxable {formatINR(taxableAmount)} = +{formatINR(gstAmount)}
                 </p>
               ) : (
-                <p className="text-xs text-gray-500 italic">GST is currently disabled for this document.</p>
+                <p className="text-xs text-neutral-400 italic">GST calculation is disabled for this document.</p>
               )}
             </div>
           </div>
 
-          {/* Advance Amount (Editable in Quotation & Invoice) */}
+          {/* Advance Booking Deposit */}
           <div className="control-card">
             <div className="control-card-header">
               <span className="control-title">
@@ -134,7 +130,7 @@ export default function TotalsSection({
                   type="number"
                   min="0"
                   step="any"
-                  className="input-field pl-8"
+                  className="input-field pl-8 font-mono"
                   placeholder="e.g. 50000"
                   value={advancePaid || ''}
                   onChange={(e) => handleUpdate('advancePaid', e.target.value)}
@@ -143,50 +139,61 @@ export default function TotalsSection({
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Right Column: Breakdown Summary Display */}
-        <div className="totals-summary-display-col">
-          <div className="summary-receipt-box">
-            <div className="receipt-row">
-              <span className="receipt-label">Subtotal</span>
-              <span className="receipt-value font-mono font-semibold">{formatINR(subtotal)}</span>
-            </div>
-
-            {discountAmount > 0 && (
-              <div className="receipt-row text-rose-700">
-                <span className="receipt-label">
-                  Discount ({discountType === 'percent' ? `${discountValue}%` : 'Flat'})
-                </span>
-                <span className="receipt-value font-mono">- {formatINR(discountAmount)}</span>
-              </div>
-            )}
-
-            {taxEnabled && (
-              <div className="receipt-row text-emerald-800">
-                <span className="receipt-label">GST ({gstPercent}%)</span>
-                <span className="receipt-value font-mono">+ {formatINR(gstAmount)}</span>
-              </div>
-            )}
-
-            <div className="receipt-divider"></div>
-
-            <div className="receipt-row grand-total-row">
-              <span className="receipt-label-grand">GRAND TOTAL</span>
-              <span className="receipt-value-grand">{formatINR(grandTotal)}</span>
-            </div>
-
-            <div className="receipt-row text-gray-700 pt-2 border-t border-dashed border-gray-300">
-              <span className="receipt-label">Advance Paid</span>
-              <span className="receipt-value font-mono">{formatINR(parseFloat(advancePaid) || 0)}</span>
-            </div>
-
-            <div className="receipt-row balance-due-row">
-              <span className="receipt-label-balance">BALANCE DUE</span>
-              <span className="receipt-value-balance">{formatINR(balanceDue)}</span>
-            </div>
+      {/* Right Column: Section 05 SUMMARY (Dark Summary Card) */}
+      <section className="form-section-card summary-panel-card">
+        <div className="section-head-banner">
+          <span className="section-step-badge">05</span>
+          <div className="section-head-text">
+            <h2 className="section-title">SUMMARY</h2>
+            <p className="section-subtitle">Review financial breakdown and balance due.</p>
           </div>
         </div>
-      </div>
-    </section>
+
+        <div className="luxury-dark-summary-card">
+          <div className="summary-line-item">
+            <span className="sum-label">Subtotal</span>
+            <span className="sum-val font-mono">{formatINR(subtotal)}</span>
+          </div>
+
+          {discountAmount > 0 && (
+            <div className="summary-line-item sum-discount">
+              <span className="sum-label">
+                Discount ({discountType === 'percent' ? `${discountValue}%` : 'Flat'})
+              </span>
+              <span className="sum-val font-mono">- {formatINR(discountAmount)}</span>
+            </div>
+          )}
+
+          {taxEnabled && gstAmount > 0 && (
+            <div className="summary-line-item sum-gst">
+              <span className="sum-label">GST ({gstPercent}%)</span>
+              <span className="sum-val font-mono">+ {formatINR(gstAmount)}</span>
+            </div>
+          )}
+
+          <div className="summary-card-divider"></div>
+
+          <div className="summary-grand-row">
+            <span className="grand-label">TOTAL</span>
+            <span className="grand-val font-mono">{formatINR(grandTotal)}</span>
+          </div>
+
+          {parseFloat(advancePaid) > 0 && (
+            <>
+              <div className="summary-sub-split">
+                <span className="sub-split-label">Advance Paid</span>
+                <span className="sub-split-val font-mono">{formatINR(parseFloat(advancePaid) || 0)}</span>
+              </div>
+              <div className="summary-sub-split sum-balance-highlight">
+                <span className="sub-split-label">Balance Due</span>
+                <span className="sub-split-val font-mono">{formatINR(balanceDue)}</span>
+              </div>
+            </>
+          )}
+        </div>
+      </section>
+    </div>
   );
 }

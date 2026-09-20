@@ -85,100 +85,89 @@ export default function InvoicePreview({
 
       {/* A4 Sheet Container */}
       <div className="a4-sheet-container printable-document invoice-document">
-        {/* Top Regal Crest Ornament */}
-        <div className="doc-regal-top-crest">
-          <span className="crest-line"></span>
-          <span className="crest-tag">✦ ESTD. 2010 • VALANCHERY, MALAPPURAM • LUXURY WEDDINGS & EVENTS ✦</span>
-          <span className="crest-line"></span>
-        </div>
-
-        {/* Brand Header */}
-        <div className="doc-header-block">
-          <div className="doc-brand-top">
-            <div className="doc-logo-box">
-              <img
-                src="/silver_catering_logo.png"
-                alt="Silver Catering Services Official Logo"
-                className="doc-brand-logo"
-              />
-            </div>
-            <div className="doc-company-details">
-              <h1 className="doc-company-title">SILVER CATERING SERVICES</h1>
-              <p className="doc-company-tagline">Premium Catering Services for Weddings & Events</p>
-              <div className="doc-company-rule">
-                <span className="rule-dot">◆</span>
-                <span className="rule-line"></span>
-                <span className="rule-dot">◆</span>
+        {/* Document Header */}
+        <div className="doc-executive-header doc-invoice-header">
+          <div className="doc-header-main-row">
+            <div className="doc-brand-cluster">
+              <div className="doc-logo-box">
+                <img
+                  src="/silver_catering_logo.png"
+                  alt="Silver Catering Services"
+                  className="doc-brand-logo"
+                />
               </div>
-              <p className="doc-company-meta">
-                Valanchery, Malappuram, Kerala 679572 • <strong>Phone:</strong> +91 98464 15767
-              </p>
-              <p className="doc-company-email"><strong>Email:</strong> Silvereventsandcaters@gmail.com</p>
-            </div>
-
-            {/* Official Verification Seal */}
-            <div className="doc-seal-emblem">
-              <div className="seal-circle seal-invoice">
-                <span className="seal-stars">★ ★ ★</span>
-                <span className="seal-org">SILVER CATERING</span>
-                <span className="seal-type">TAX INVOICE</span>
-                <span className="seal-loc">KERALA</span>
+              <div className="doc-brand-titles">
+                <h1 className="doc-company-name">SILVER CATERING</h1>
+                <p className="doc-company-sub">Catering • Events • Hospitality</p>
+                <p className="doc-company-contact">
+                  Valanchery, Malappuram, Kerala • Phone: +91 98464 15767
+                </p>
               </div>
             </div>
-          </div>
 
-          <div className="doc-title-banner invoice-theme">
-            <div className="flex items-center gap-2">
-              <span className="doc-title-text">TAX INVOICE</span>
-              {getStatusStamp()}
-            </div>
-            <div className="flex items-center gap-3">
-              {invoice.quotationNumber && (
-                <span className="text-xs text-amber-200">QUOTATION: #{invoice.quotationNumber}</span>
-              )}
-              <span className="doc-num-tag">INVOICE: #{invoice.number || 'INV-0001'}</span>
+            <div className="doc-meta-badge-block">
+              <div className="flex items-center justify-end gap-2 mb-1">
+                <span className="doc-type-label doc-type-invoice">INVOICE</span>
+                {getStatusStamp()}
+              </div>
+              <div className="doc-meta-rows">
+                <div className="doc-meta-row">
+                  <span className="meta-k">Invoice No:</span>
+                  <span className="meta-v font-mono font-bold">#{invoice.number || 'INV-0001'}</span>
+                </div>
+                {invoice.quotationNumber && (
+                  <div className="doc-meta-row">
+                    <span className="meta-k">Quotation Ref:</span>
+                    <span className="meta-v font-mono">#{invoice.quotationNumber}</span>
+                  </div>
+                )}
+                <div className="doc-meta-row">
+                  <span className="meta-k">Date:</span>
+                  <span className="meta-v">{formatDate(invoice.date)}</span>
+                </div>
+                {invoice.dueDate && (
+                  <div className="doc-meta-row">
+                    <span className="meta-k">Due Date:</span>
+                    <span className="meta-v">{formatDate(invoice.dueDate)}</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Customer & Invoice Meta Grid */}
-        <div className="doc-meta-grid">
-          {/* Customer Details */}
-          <div className="doc-meta-card">
-            <div className="doc-meta-card-header">
-              <span>CUSTOMER DETAILS</span>
+        {/* Customer & Event Details Two-Column Box */}
+        <div className="doc-info-grid">
+          {/* BILLED TO */}
+          <div className="doc-info-card">
+            <div className="doc-info-card-header">
+              <span>BILLED TO</span>
             </div>
-            <div className="doc-meta-card-body">
-              <p className="client-name">{invoice.customerName || 'Valued Customer'}</p>
-              <p className="meta-text"><strong>Contact Number:</strong> {invoice.customerPhone || '—'}</p>
+            <div className="doc-info-card-body">
+              <p className="client-main-name">{invoice.customerName || 'Valued Customer'}</p>
+              <p className="info-line"><strong>Phone:</strong> {invoice.customerPhone || '—'}</p>
               {invoice.customerEmail && (
-                <p className="meta-text"><strong>Email:</strong> {invoice.customerEmail}</p>
+                <p className="info-line"><strong>Email:</strong> {invoice.customerEmail}</p>
               )}
               {invoice.customerAddress && (
-                <p className="meta-text"><strong>Address:</strong> {invoice.customerAddress}</p>
+                <p className="info-line"><strong>Address:</strong> {invoice.customerAddress}</p>
               )}
             </div>
           </div>
 
-          {/* Invoice & Event Scheduling */}
-          <div className="doc-meta-card">
-            <div className="doc-meta-card-header">
-              <span>INVOICE & FUNCTION DETAILS</span>
+          {/* EVENT */}
+          <div className="doc-info-card">
+            <div className="doc-info-card-header">
+              <span>EVENT</span>
             </div>
-            <div className="doc-meta-card-body">
-              <div className="meta-two-col">
-                <div>
-                  <p className="meta-text"><strong>Event Name:</strong> {invoice.eventName || 'Catering Event'}</p>
-                  <p className="meta-text"><strong>Event Date:</strong> {formatDate(invoice.eventDate)}</p>
-                  <p className="meta-text"><strong>Time:</strong> {invoice.eventTime || 'As scheduled'}</p>
-                </div>
-                <div>
-                  <p className="meta-text"><strong>Number of Guests (Pax):</strong> <span className="font-bold text-emerald-950">{invoice.guests || '—'} Guests</span></p>
-                  <p className="meta-text"><strong>Invoice Date:</strong> {formatDate(invoice.date)}</p>
-                  <p className="meta-text"><strong>Due Date:</strong> {formatDate(invoice.dueDate)}</p>
-                </div>
-              </div>
-              <p className="meta-text mt-1"><strong>Venue:</strong> {invoice.venue || 'To be specified'}</p>
+            <div className="doc-info-card-body">
+              <p className="event-main-name">{invoice.eventName || 'Catering Event'}</p>
+              <p className="info-line"><strong>Event Date:</strong> {formatDate(invoice.eventDate)}</p>
+              {invoice.eventTime && (
+                <p className="info-line"><strong>Time:</strong> {invoice.eventTime}</p>
+              )}
+              <p className="info-line"><strong>Venue:</strong> {invoice.venue || 'To be specified'}</p>
+              <p className="info-line"><strong>Guests:</strong> {invoice.guests || '—'} Guests</p>
             </div>
           </div>
         </div>

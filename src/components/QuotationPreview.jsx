@@ -84,95 +84,80 @@ export default function QuotationPreview({
 
       {/* A4 Sheet Container */}
       <div className="a4-sheet-container printable-document quotation-document">
-        {/* Top Regal Crest Ornament */}
-        <div className="doc-regal-top-crest">
-          <span className="crest-line"></span>
-          <span className="crest-tag">✦ ESTD. 2010 • VALANCHERY, MALAPPURAM • LUXURY WEDDINGS & EVENTS ✦</span>
-          <span className="crest-line"></span>
-        </div>
-
-        {/* Brand Header */}
-        <div className="doc-header-block">
-          <div className="doc-brand-top">
-            <div className="doc-logo-box">
-              <img
-                src="/silver_catering_logo.png"
-                alt="Silver Catering Services Official Logo"
-                className="doc-brand-logo"
-              />
-            </div>
-            <div className="doc-company-details">
-              <h1 className="doc-company-title">SILVER CATERING SERVICES</h1>
-              <p className="doc-company-tagline">Premium Catering Services for Weddings & Events</p>
-              <div className="doc-company-rule">
-                <span className="rule-dot">◆</span>
-                <span className="rule-line"></span>
-                <span className="rule-dot">◆</span>
+        {/* Document Header */}
+        <div className="doc-executive-header">
+          <div className="doc-header-main-row">
+            <div className="doc-brand-cluster">
+              <div className="doc-logo-box">
+                <img
+                  src="/silver_catering_logo.png"
+                  alt="Silver Catering Services"
+                  className="doc-brand-logo"
+                />
               </div>
-              <p className="doc-company-meta">
-                Valanchery, Malappuram, Kerala 679572 • <strong>Phone:</strong> +91 98464 15767
-              </p>
-              <p className="doc-company-email"><strong>Email:</strong> Silvereventsandcaters@gmail.com</p>
-            </div>
-
-            {/* Official Verification Seal */}
-            <div className="doc-seal-emblem">
-              <div className="seal-circle">
-                <span className="seal-stars">★ ★ ★</span>
-                <span className="seal-org">SILVER CATERING</span>
-                <span className="seal-type">OFFICIAL PROPOSAL</span>
-                <span className="seal-loc">KERALA</span>
+              <div className="doc-brand-titles">
+                <h1 className="doc-company-name">SILVER CATERING</h1>
+                <p className="doc-company-sub">Catering • Events • Hospitality</p>
+                <p className="doc-company-contact">
+                  Valanchery, Malappuram, Kerala • Phone: +91 98464 15767
+                </p>
               </div>
             </div>
-          </div>
 
-          <div className="doc-title-banner quotation-theme">
-            <div className="flex items-center gap-2">
-              <span className="doc-title-text">CATERING QUOTATION</span>
-              <span className="doc-title-badge">ESTIMATE</span>
+            <div className="doc-meta-badge-block">
+              <span className="doc-type-label">QUOTATION</span>
+              <div className="doc-meta-rows">
+                <div className="doc-meta-row">
+                  <span className="meta-k">Quotation No:</span>
+                  <span className="meta-v font-mono font-bold">#{quotation.number || 'QT-0001'}</span>
+                </div>
+                <div className="doc-meta-row">
+                  <span className="meta-k">Date:</span>
+                  <span className="meta-v">{formatDate(quotation.date)}</span>
+                </div>
+                {quotation.validUntil && (
+                  <div className="doc-meta-row">
+                    <span className="meta-k">Valid Until:</span>
+                    <span className="meta-v">{formatDate(quotation.validUntil)}</span>
+                  </div>
+                )}
+              </div>
             </div>
-            <span className="doc-num-tag">REF: #{quotation.number || 'QT-0001'}</span>
           </div>
         </div>
 
         {/* Customer & Event Details Two-Column Box */}
-        <div className="doc-meta-grid">
-          {/* Customer Details */}
-          <div className="doc-meta-card">
-            <div className="doc-meta-card-header">
-              <span>CUSTOMER DETAILS</span>
+        <div className="doc-info-grid">
+          {/* BILLED TO */}
+          <div className="doc-info-card">
+            <div className="doc-info-card-header">
+              <span>BILLED TO</span>
             </div>
-            <div className="doc-meta-card-body">
-              <p className="client-name">{quotation.customerName || 'Valued Customer'}</p>
-              <p className="meta-text"><strong>Contact Number:</strong> {quotation.customerPhone || '—'}</p>
+            <div className="doc-info-card-body">
+              <p className="client-main-name">{quotation.customerName || 'Valued Customer'}</p>
+              <p className="info-line"><strong>Phone:</strong> {quotation.customerPhone || '—'}</p>
               {quotation.customerEmail && (
-                <p className="meta-text"><strong>Email:</strong> {quotation.customerEmail}</p>
+                <p className="info-line"><strong>Email:</strong> {quotation.customerEmail}</p>
               )}
               {quotation.customerAddress && (
-                <p className="meta-text"><strong>Address:</strong> {quotation.customerAddress}</p>
+                <p className="info-line"><strong>Address:</strong> {quotation.customerAddress}</p>
               )}
             </div>
           </div>
 
-          {/* Event & Schedule Details */}
-          <div className="doc-meta-card">
-            <div className="doc-meta-card-header">
-              <span>EVENT & SCHEDULE DETAILS</span>
+          {/* EVENT */}
+          <div className="doc-info-card">
+            <div className="doc-info-card-header">
+              <span>EVENT</span>
             </div>
-            <div className="doc-meta-card-body">
-              <div className="meta-two-col">
-                <div>
-                  <p className="meta-text"><strong>Event Name:</strong> {quotation.eventName || 'Catering Function'}</p>
-                  <p className="meta-text"><strong>Event Date:</strong> {formatDate(quotation.eventDate)}</p>
-                  <p className="meta-text"><strong>Time:</strong> {quotation.eventTime || 'As scheduled'}</p>
-                </div>
-                <div>
-                  <p className="meta-text"><strong>Number of Guests (Pax):</strong> <span className="font-bold text-emerald-950">{quotation.guests || '—'} Guests</span></p>
-                  <p className="meta-text"><strong>Quotation Date:</strong> {formatDate(quotation.date)}</p>
-                  <p className="meta-text"><strong>Valid Until:</strong> {formatDate(quotation.validUntil)}</p>
-                </div>
-              </div>
-              <p className="meta-text mt-1"><strong>Venue:</strong> {quotation.venue || 'To be specified'}</p>
+            <div className="doc-info-card-body">
+              <p className="event-main-name">{quotation.eventName || 'Catering Function'}</p>
+              <p className="info-line"><strong>Event Date:</strong> {formatDate(quotation.eventDate)}</p>
+              {quotation.eventTime && (
+                <p className="info-line"><strong>Time:</strong> {quotation.eventTime}</p>
+              )}
+              <p className="info-line"><strong>Venue:</strong> {quotation.venue || 'To be confirmed'}</p>
+              <p className="info-line"><strong>Guests:</strong> {quotation.guests || '—'} Guests</p>
             </div>
           </div>
         </div>
