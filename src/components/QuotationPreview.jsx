@@ -84,30 +84,55 @@ export default function QuotationPreview({
       )}
 
       {/* A4 Sheet Container */}
-      <div className="a4-sheet-container printable-document">
+      <div className="a4-sheet-container printable-document quotation-document">
+        {/* Top Regal Crest Ornament */}
+        <div className="doc-regal-top-crest">
+          <span className="crest-line"></span>
+          <span className="crest-tag">✦ ESTD. 2010 • VALANCHERY, MALAPPURAM • LUXURY WEDDINGS & EVENTS ✦</span>
+          <span className="crest-line"></span>
+        </div>
+
         {/* Brand Header */}
         <div className="doc-header-block">
           <div className="doc-brand-top">
             <div className="doc-logo-box">
               <img
                 src="/silver_catering_logo.png"
-                alt="Silver Catering Services Logo"
+                alt="Silver Catering Services Official Logo"
                 className="doc-brand-logo"
               />
             </div>
             <div className="doc-company-details">
               <h1 className="doc-company-title">SILVER CATERING SERVICES</h1>
               <p className="doc-company-tagline">Premium Catering Services for Weddings & Events</p>
+              <div className="doc-company-rule">
+                <span className="rule-dot">◆</span>
+                <span className="rule-line"></span>
+                <span className="rule-dot">◆</span>
+              </div>
               <p className="doc-company-meta">
-                Valanchery, Malappuram, Kerala 679572 • Phone: +91 98464 15767
+                Valanchery, Malappuram, Kerala 679572 • <strong>Phone:</strong> +91 98464 15767
               </p>
-              <p className="doc-company-email">Email: Silvereventsandcaters@gmail.com</p>
+              <p className="doc-company-email"><strong>Email:</strong> Silvereventsandcaters@gmail.com</p>
+            </div>
+
+            {/* Official Verification Seal */}
+            <div className="doc-seal-emblem">
+              <div className="seal-circle">
+                <span className="seal-stars">★ ★ ★</span>
+                <span className="seal-org">SILVER CATERING</span>
+                <span className="seal-type">OFFICIAL PROPOSAL</span>
+                <span className="seal-loc">KERALA</span>
+              </div>
             </div>
           </div>
 
           <div className="doc-title-banner quotation-theme">
-            <span className="doc-title-text">CATERING QUOTATION</span>
-            <span className="doc-num-tag">REF: {quotation.number || 'QT-0001'}</span>
+            <div className="flex items-center gap-2">
+              <span className="doc-title-text">CATERING QUOTATION</span>
+              <span className="doc-title-badge">ESTIMATE</span>
+            </div>
+            <span className="doc-num-tag">REF: #{quotation.number || 'QT-0001'}</span>
           </div>
         </div>
 
@@ -261,10 +286,16 @@ export default function QuotationPreview({
           <div className="signature-col">
             <div className="signature-line-box"></div>
             <p className="signatory-label">Customer Acceptance Signature</p>
+            <p className="signatory-sub">Name: ________________________</p>
             <p className="signatory-sub">Date: ________________________</p>
           </div>
 
           <div className="signature-col text-right">
+            <div className="authorized-signatory-stamp">
+              <span className="stamp-org">SILVER CATERING SERVICES</span>
+              <span className="stamp-loc">VALANCHERY • MALAPPURAM</span>
+              <span className="stamp-valid">OFFICIAL PROPOSAL</span>
+            </div>
             <div className="signature-line-box"></div>
             <p className="signatory-label">Authorized Signatory</p>
             <p className="signatory-sub font-semibold text-emerald-900">Silver Catering Services</p>
@@ -273,7 +304,7 @@ export default function QuotationPreview({
 
         {/* Footer Note */}
         <div className="doc-footer-note">
-          <span>This is an official quotation issued by Silver Catering Services, Valanchery, Malappuram. Valid for 14 days from issue date.</span>
+          <span>This is an official quotation issued by Silver Catering Services, Valanchery, Malappuram • Phone: +91 98464 15767 • Valid for 14 days from issue date.</span>
         </div>
       </div>
     </div>

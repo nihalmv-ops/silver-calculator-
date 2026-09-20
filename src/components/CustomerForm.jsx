@@ -94,3 +94,4 @@ export default function CustomerForm({ details, onChange, errors = {} }) {
     </section>
   );
 }
+

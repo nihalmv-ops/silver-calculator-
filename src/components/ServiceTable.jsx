@@ -33,6 +33,9 @@ export default function ServiceTable({ items = [], onChange, onAddItem }) {
     }
   };
 
+  const itemsCount = items.filter((it) => it.name && it.name.trim() !== '').length;
+  const runningSubtotal = items.reduce((acc, it) => acc + calcRowAmount(it.quantity, it.rate), 0);
+
   return (
     <section className="form-card service-table-section">
       <div className="section-header-banner flex justify-between items-center">
@@ -46,14 +49,21 @@ export default function ServiceTable({ items = [], onChange, onAddItem }) {
           </div>
         </div>
 
-        <button
-          type="button"
-          className="btn-add-row-top"
-          onClick={handleAddNewRow}
-        >
-          <PlusIcon className="w-4 h-4" />
-          <span>Add Service</span>
-        </button>
+        <div className="flex items-center gap-3">
+          {itemsCount > 0 && (
+            <span className="table-running-subtotal-badge font-mono">
+              {itemsCount} {itemsCount === 1 ? 'Service' : 'Services'} • {formatINR(runningSubtotal)}
+            </span>
+          )}
+          <button
+            type="button"
+            className="btn-add-row-top"
+            onClick={handleAddNewRow}
+          >
+            <PlusIcon className="w-4 h-4" />
+            <span>Add Service</span>
+          </button>
+        </div>
       </div>
 
       <div className="service-table-responsive-wrapper">
@@ -176,3 +186,4 @@ export default function ServiceTable({ items = [], onChange, onAddItem }) {
     </section>
   );
 }
+

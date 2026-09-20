@@ -136,3 +136,4 @@ export default function EventForm({ details, onChange, isInvoice = false }) {
     </section>
   );
 }
+

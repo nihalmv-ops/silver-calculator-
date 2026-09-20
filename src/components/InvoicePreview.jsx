@@ -85,23 +85,45 @@ export default function InvoicePreview({
 
       {/* A4 Sheet Container */}
       <div className="a4-sheet-container printable-document invoice-document">
+        {/* Top Regal Crest Ornament */}
+        <div className="doc-regal-top-crest">
+          <span className="crest-line"></span>
+          <span className="crest-tag">✦ ESTD. 2010 • VALANCHERY, MALAPPURAM • LUXURY WEDDINGS & EVENTS ✦</span>
+          <span className="crest-line"></span>
+        </div>
+
         {/* Brand Header */}
         <div className="doc-header-block">
           <div className="doc-brand-top">
             <div className="doc-logo-box">
               <img
                 src="/silver_catering_logo.png"
-                alt="Silver Catering Services Logo"
+                alt="Silver Catering Services Official Logo"
                 className="doc-brand-logo"
               />
             </div>
             <div className="doc-company-details">
               <h1 className="doc-company-title">SILVER CATERING SERVICES</h1>
               <p className="doc-company-tagline">Premium Catering Services for Weddings & Events</p>
+              <div className="doc-company-rule">
+                <span className="rule-dot">◆</span>
+                <span className="rule-line"></span>
+                <span className="rule-dot">◆</span>
+              </div>
               <p className="doc-company-meta">
-                Valanchery, Malappuram, Kerala 679572 • Phone: +91 98464 15767
+                Valanchery, Malappuram, Kerala 679572 • <strong>Phone:</strong> +91 98464 15767
               </p>
-              <p className="doc-company-email">Email: Silvereventsandcaters@gmail.com</p>
+              <p className="doc-company-email"><strong>Email:</strong> Silvereventsandcaters@gmail.com</p>
+            </div>
+
+            {/* Official Verification Seal */}
+            <div className="doc-seal-emblem">
+              <div className="seal-circle seal-invoice">
+                <span className="seal-stars">★ ★ ★</span>
+                <span className="seal-org">SILVER CATERING</span>
+                <span className="seal-type">TAX INVOICE</span>
+                <span className="seal-loc">KERALA</span>
+              </div>
             </div>
           </div>
 
@@ -112,7 +134,7 @@ export default function InvoicePreview({
             </div>
             <div className="flex items-center gap-3">
               {invoice.quotationNumber && (
-                <span className="text-xs text-amber-200">QUOTATION: {invoice.quotationNumber}</span>
+                <span className="text-xs text-amber-200">QUOTATION: #{invoice.quotationNumber}</span>
               )}
               <span className="doc-num-tag">INVOICE: #{invoice.number || 'INV-0001'}</span>
             </div>
@@ -275,10 +297,16 @@ export default function InvoicePreview({
           <div className="signature-col">
             <div className="signature-line-box"></div>
             <p className="signatory-label">Client Acknowledgement</p>
+            <p className="signatory-sub">Name: ________________________</p>
             <p className="signatory-sub">Date: ________________________</p>
           </div>
 
           <div className="signature-col text-right">
+            <div className="authorized-signatory-stamp">
+              <span className="stamp-org">SILVER CATERING SERVICES</span>
+              <span className="stamp-loc">VALANCHERY • MALAPPURAM</span>
+              <span className="stamp-valid">OFFICIAL TAX INVOICE</span>
+            </div>
             <div className="signature-line-box"></div>
             <p className="signatory-label">Authorized Signatory</p>
             <p className="signatory-sub font-semibold text-emerald-900">Silver Catering Services</p>
@@ -287,7 +315,7 @@ export default function InvoicePreview({
 
         {/* Footer Note */}
         <div className="doc-footer-note">
-          <span>Thank you for your business. For any billing questions, please reach out to Silver Catering Services at +91 98464 15767.</span>
+          <span>Thank you for your business • Silver Catering Services, Valanchery, Malappuram • Phone: +91 98464 15767 • Email: Silvereventsandcaters@gmail.com</span>
         </div>
       </div>
     </div>

@@ -28,12 +28,12 @@ export const PAYMENT_METHODS = [
 
 // Preset Services for Quick Add
 export const PRESET_SERVICES = [
-  { name: 'Breakfast', defaultUnit: 'Guests', defaultRate: 120 },
-  { name: 'Lunch', defaultUnit: 'Guests', defaultRate: 250 },
-  { name: 'Evening Reception', defaultUnit: 'Guests', defaultRate: 180 },
-  { name: 'Wedding Eve', defaultUnit: 'Guests', defaultRate: 200 },
-  { name: 'Reception – 3:00 PM', defaultUnit: 'Guests', defaultRate: 150 },
-  { name: 'Arrangements', defaultUnit: 'Fixed', defaultRate: 15000 }
+  { name: 'Breakfast', defaultUnit: 'Guests', defaultRate: 120, icon: '🍳' },
+  { name: 'Lunch', defaultUnit: 'Guests', defaultRate: 250, icon: '🍛' },
+  { name: 'Evening Reception', defaultUnit: 'Guests', defaultRate: 180, icon: '☕' },
+  { name: 'Wedding Eve', defaultUnit: 'Guests', defaultRate: 200, icon: '🎉' },
+  { name: 'Reception – 3:00 PM', defaultUnit: 'Guests', defaultRate: 150, icon: '✨' },
+  { name: 'Arrangements', defaultUnit: 'Fixed', defaultRate: 15000, icon: '🎪' }
 ];
 
 export const STANDARD_TERMS = [

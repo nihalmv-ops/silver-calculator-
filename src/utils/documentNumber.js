@@ -60,3 +60,4 @@ export function ensureDocNumberSequence(type, currentDocNumber) {
     console.error('Failed to sync sequence counter:', e);
   }
 }
+

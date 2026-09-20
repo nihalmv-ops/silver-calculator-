@@ -1893,6 +1893,16 @@ body {
   background: var(--color-emerald-dark);
 }
 
+.table-running-subtotal-badge {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
 .service-table-responsive-wrapper {
   overflow-x: auto;
   width: 100%;
@@ -2589,13 +2599,38 @@ body {
 /* Document Header */
 .doc-header-block {
   margin-bottom: 16px;
+  position: relative;
+}
+
+/* Regal Top Crest Ornament */
+.doc-regal-top-crest {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.crest-line {
+  height: 1px;
+  width: 65px;
+  background: linear-gradient(90deg, transparent, #c5a059, transparent);
+}
+
+.crest-tag {
+  font-family: 'Cinzel', serif, Georgia;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  color: #97732a;
+  text-transform: uppercase;
 }
 
 .doc-brand-top {
   display: flex;
   align-items: center;
   gap: 18px;
-  padding-bottom: 14px;
+  padding-bottom: 12px;
   border-bottom: 2px solid var(--color-gold-mid);
 }
 
@@ -2603,6 +2638,11 @@ body {
   width: 72px;
   height: 72px;
   flex-shrink: 0;
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .doc-brand-logo {
@@ -2617,30 +2657,113 @@ body {
 
 .doc-company-title {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 800;
   letter-spacing: 1.5px;
   color: var(--color-emerald-deep);
-  margin-bottom: 2px;
+  margin-bottom: 1px;
+  line-height: 1.1;
 }
 
 .doc-company-tagline {
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 11px;
+  font-weight: 700;
   color: var(--color-gold-deep);
   letter-spacing: 0.8px;
   text-transform: uppercase;
-  margin-bottom: 3px;
+}
+
+.doc-company-rule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 3px 0 4px 0;
+}
+
+.rule-line {
+  height: 1px;
+  width: 36px;
+  background: #c5a059;
+}
+
+.rule-dot {
+  color: #c5a059;
+  font-size: 6px;
 }
 
 .doc-company-meta {
-  font-size: 11px;
+  font-size: 10.5px;
   color: #4b5563;
+  line-height: 1.35;
 }
 
 .doc-company-email {
-  font-size: 11px;
+  font-size: 10.5px;
   color: #4b5563;
+}
+
+/* Official Verification Seal Emblem */
+.doc-seal-emblem {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seal-circle {
+  width: 78px;
+  height: 78px;
+  border: 1.5px dashed #c5a059;
+  border-radius: 50%;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fbf9f4;
+  text-align: center;
+  box-shadow: inset 0 0 0 2px rgba(197, 160, 89, 0.15);
+}
+
+.seal-circle.seal-invoice {
+  border-color: #0f3d2e;
+  background: #f0fdf4;
+}
+
+.seal-stars {
+  color: #c5a059;
+  font-size: 7px;
+  letter-spacing: 1.5px;
+}
+
+.seal-org {
+  font-size: 7px;
+  font-weight: 800;
+  color: #09261c;
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+  margin-top: 1px;
+}
+
+.seal-type {
+  font-size: 6.5px;
+  font-weight: 900;
+  color: #97732a;
+  letter-spacing: 0.8px;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin: 1px 0;
+}
+
+.seal-circle.seal-invoice .seal-type {
+  color: #0f3d2e;
+}
+
+.seal-loc {
+  font-size: 6px;
+  font-weight: 700;
+  color: #6b7280;
+  letter-spacing: 0.5px;
 }
 
 .doc-title-banner {
@@ -2650,6 +2773,18 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.doc-title-badge {
+  font-size: 9px;
+  background: rgba(197, 160, 89, 0.25);
+  border: 1px solid #c5a059;
+  color: #f7eed8;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
 }
 
 .doc-title-banner.quotation-theme {
@@ -2737,30 +2872,36 @@ body {
 }
 
 .doc-table thead {
-  background: #f3f4f6;
-  border-top: 1.5px solid #d1d5db;
-  border-bottom: 1.5px solid #d1d5db;
+  background: #09281e;
+  border-top: 2px solid #c5a059;
+  border-bottom: 2px solid #c5a059;
 }
 
 .doc-table th {
-  padding: 6px 8px;
-  font-weight: 700;
-  color: #111827;
+  padding: 7px 10px;
+  font-weight: 800;
+  color: #ffffff;
   font-size: 10px;
-  letter-spacing: 0.4px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.doc-table tbody tr:nth-child(even) {
+  background-color: #faf8f5;
 }
 
 .doc-table td {
-  padding: 6px 8px;
-  border-bottom: 1px solid #f3f4f6;
+  padding: 7px 10px;
+  border-bottom: 1px solid #eee8df;
   color: #1f2937;
+  font-size: 11px;
 }
 
 .th-idx, .td-idx { width: 30px; }
-.th-qty, .td-qty { width: 70px; }
-.th-unit, .td-unit { width: 80px; }
-.th-rate, .td-rate { width: 90px; }
-.th-amount, .td-amount { width: 110px; }
+.th-qty, .td-qty { width: 75px; }
+.th-unit, .td-unit { width: 85px; }
+.th-rate, .td-rate { width: 95px; }
+.th-amount, .td-amount { width: 115px; }
 
 /* Document Bottom & Summaries */
 .doc-bottom-section {
@@ -2801,14 +2942,15 @@ body {
 }
 
 .doc-summary-box {
-  background: #f9fafb;
-  border: 1px solid #e5e7eb;
+  background: #fbf9f5;
+  border: 1.5px solid #e5dfd5;
   border-radius: 4px;
-  padding: 8px 12px;
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 5px;
   font-size: 11px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .summary-line {
@@ -2816,19 +2958,32 @@ body {
   justify-content: space-between;
   align-items: center;
   color: #374151;
+  font-size: 11.5px;
 }
 
 .summary-grand-total {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #e8f3ef;
-  margin: 4px -6px;
-  padding: 6px 8px;
+  background: linear-gradient(135deg, #09261c 0%, #0f3d2e 100%);
+  color: #ffffff;
+  margin: 6px -8px;
+  padding: 8px 10px;
   border-radius: 4px;
   font-weight: 800;
-  font-size: 12.5px;
-  color: var(--color-emerald-deep);
+  border-left: 4px solid #d4af37;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.summary-grand-total .lbl {
+  color: #f7eed8;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+}
+
+.summary-grand-total .val {
+  color: #ffffff;
+  font-size: 14.5px;
 }
 
 .balance-highlight-line {
@@ -2880,6 +3035,52 @@ body {
   font-weight: 800;
   border-radius: 3px;
   letter-spacing: 0.5px;
+}
+
+/* Authorized Signatory Stamp Box */
+.authorized-signatory-stamp {
+  border: 1.5px dashed #0f3d2e;
+  background: rgba(15, 61, 46, 0.04);
+  border-radius: 4px;
+  padding: 6px 10px;
+  text-align: center;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stamp-org {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: #0f3d2e;
+  letter-spacing: 0.8px;
+}
+
+.stamp-loc {
+  font-size: 7.5px;
+  font-weight: 600;
+  color: #6b7280;
+  letter-spacing: 0.5px;
+}
+
+.stamp-valid {
+  font-size: 8px;
+  font-weight: 800;
+  color: #97732a;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Preset Service Icons in Section C */
+.preset-icon {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.preset-name {
+  font-weight: 700;
+  color: #0f3d2e;
 }
 
 /* Signature Section */

@@ -77,3 +77,4 @@ export function openWhatsAppShare(doc, isInvoice = false) {
 
   window.open(url, '_blank', 'noopener,noreferrer');
 }
+

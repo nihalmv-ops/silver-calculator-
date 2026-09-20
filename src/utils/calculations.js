@@ -56,3 +56,4 @@ export function determinePaymentStatus(grandTotal, advancePaid = 0) {
   if (adv > 0 && adv < total) return 'PARTIALLY PAID';
   return 'PENDING';
 }
+

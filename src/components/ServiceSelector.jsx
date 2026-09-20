@@ -45,8 +45,8 @@ export default function ServiceSelector({ onAddService, eventGuests }) {
             onClick={() => handleQuickAdd(preset)}
             title={`Add ${preset.name} (${preset.defaultUnit} @ ₹${preset.defaultRate})`}
           >
-            <PlusIcon className="w-3.5 h-3.5 text-gold-600" />
-            <span>{preset.name}</span>
+            <span className="preset-icon">{preset.icon || '🍽️'}</span>
+            <span className="preset-name">{preset.name}</span>
             <span className="quick-service-rate-hint">₹{preset.defaultRate}</span>
           </button>
         ))}
@@ -56,10 +56,11 @@ export default function ServiceSelector({ onAddService, eventGuests }) {
           className="btn-quick-service btn-custom-service"
           onClick={handleAddCustom}
         >
-          <PlusIcon className="w-3.5 h-3.5 text-emerald-600" />
+          <PlusIcon className="w-4 h-4 text-emerald-600" />
           <span>+ Custom Service</span>
         </button>
       </div>
     </div>
   );
 }
+
