@@ -9,8 +9,9 @@
 }
 
 @media screen {
-  .printable-statement {
-    display: none;
+  .printable-statement,
+  .print-target-container {
+    display: none !important;
   }
 }
 
@@ -33,9 +34,14 @@
   /* Hide all interactive screen-only elements */
   .no-print,
   .screen-only,
+  .screen-container,
   .app-header,
   .form-card,
   .action-bar-container,
+  .bottom-sticky-bar,
+  .view-control-bar,
+  .preview-action-toolbar,
+  .app-toast-alert,
   .modal-backdrop,
   .view-mode-tabs-wrap,
   .a4-preview-toolbar,
@@ -57,7 +63,8 @@
     display: none !important;
   }
 
-  /* Display printable formal statement - STRICT 1-PAGE CONTAINER */
+  /* Display printable formal container - STRICT 1-PAGE A4 CONTAINER */
+  .print-target-container,
   #printable-statement {
     display: block !important;
     visibility: visible !important;
@@ -71,6 +78,14 @@
     break-inside: avoid !important;
     page-break-after: avoid !important;
     break-after: avoid !important;
+  }
+
+  .print-target-container .a4-sheet-container {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
   }
 }
 
