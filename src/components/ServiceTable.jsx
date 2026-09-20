@@ -66,6 +66,17 @@ export default function ServiceTable({ items = [], onChange, onAddItem }) {
         </div>
       </div>
 
+      {/* Internal Calculation Privacy Notice */}
+      <div className="internal-calc-notice-bar bg-amber-50/80 border-b border-amber-200/60 px-5 py-2 text-xs text-amber-950 flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <span className="font-bold text-amber-800">🔒 Business Calculation Mode:</span>
+          <span>Rates and line amounts are for your calculation only. The customer document will show <strong>only Service & Quantity</strong> with the final <strong>Total Amount</strong>.</span>
+        </div>
+        <span className="text-[11px] font-semibold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+          Customer Prices Hidden
+        </span>
+      </div>
+
       <div className="service-table-responsive-wrapper">
         <table className="service-table">
           <thead>

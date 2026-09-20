@@ -25,43 +25,55 @@ export function generateWhatsAppMessage(doc, isInvoice = false) {
   message += `Valanchery, Malappuram | +91 98464 15767\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━\n`;
   message += `📄 *${docTitle}:* #${docNum}\n`;
-  message += `👤 *Client:* ${doc.customerName || 'Valued Client'}\n`;
-  if (doc.eventName) message += `🎉 *Event:* ${doc.eventName}\n`;
-  message += `📅 *Date:* ${eventDateStr}\n`;
+  message += `👤 *Customer Name:* ${doc.customerName || 'Valued Customer'}\n`;
+  if (doc.customerPhone) message += `📞 *Contact Number:* ${doc.customerPhone}\n`;
+  if (doc.eventName) message += `🎉 *Event Name:* ${doc.eventName}\n`;
+  message += `📅 *Event Date:* ${eventDateStr}\n`;
   if (doc.eventTime) message += `⏰ *Time:* ${doc.eventTime}\n`;
   if (doc.venue) message += `📍 *Venue:* ${doc.venue}\n`;
-  if (doc.guests) message += `👥 *Guests:* ${doc.guests} Pax\n`;
+  if (doc.guests) message += `👥 *Number of Guests (Pax):* ${doc.guests} Guests\n`;
   message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-  message += `*SERVICES BREAKDOWN:*\n`;
+  message += `*SERVICES & QUANTITY:*\n`;
 
   if (Array.isArray(doc.items) && doc.items.length > 0) {
-    doc.items.forEach((item, idx) => {
-      if (item.name || item.rate) {
-        const itemAmt = formatINR(item.amount || (item.quantity * item.rate) || 0);
-        message += `${idx + 1}. *${item.name || 'Service'}* (${item.quantity || 1} ${item.unit || 'Pax'}) — ${itemAmt}\n`;
-      }
-    });
+    const validItems = doc.items.filter(
+      (it) => (it.name && it.name.trim() !== '') || (parseFloat(it.rate) > 0)
+    );
+
+    if (validItems.length > 0) {
+      validItems.forEach((item, idx) => {
+        const unitDisplay = item.unit && !['Guests', 'Pax', 'Nos', 'PCS', 'Fixed', 'Set', 'Event'].includes(item.unit)
+          ? ` ${item.unit}`
+          : '';
+        message += `${idx + 1}. *${item.name || 'Service'}* — ${item.quantity || 1}${unitDisplay}\n`;
+      });
+    } else {
+      message += `• Catering arrangement as discussed\n`;
+    }
   } else {
     message += `• Catering arrangement as discussed\n`;
   }
 
   message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-  if (doc.subtotal) message += `Subtotal: ${formatINR(doc.subtotal)}\n`;
-  if (doc.discountAmount > 0) message += `Discount: -${formatINR(doc.discountAmount)}\n`;
-  if (doc.gstAmount > 0) message += `GST (${doc.gstPercent || 5}%): +${formatINR(doc.gstAmount)}\n`;
-  message += `*Grand Total: ${formatINR(doc.grandTotal || 0)}*\n`;
+  message += `*TOTAL AMOUNT: ${formatINR(doc.grandTotal || 0)}*\n`;
 
   if (isInv) {
-    message += `Advance Paid: ${formatINR(doc.advancePaid || 0)}\n`;
-    message += `*Balance Due: ${formatINR(doc.balanceDue || 0)}*\n`;
-    message += `*Status:* [${doc.paymentStatus || 'PENDING'}]\n`;
-  } else if (doc.advancePaid > 0) {
-    message += `Advance Paid: ${formatINR(doc.advancePaid)}\n`;
-    message += `Balance Due: ${formatINR(doc.balanceDue || 0)}\n`;
+    message += `ADVANCE PAID: ${formatINR(doc.advancePaid || 0)}\n`;
+    message += `*BALANCE DUE: ${formatINR(doc.balanceDue || 0)}*\n`;
+    message += `*Payment Status:* [${doc.paymentStatus || 'PENDING'}]\n`;
+    message += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    message += `💳 *PAYMENT / BANK DETAILS:*\n`;
+    message += `• Bank: Federal Bank, Valanchery\n`;
+    message += `• A/C No: 15470200008432\n`;
+    message += `• IFSC: FDRL0001547\n`;
+    message += `• GPay / UPI: 9846415767@okaxis\n`;
+  } else if (parseFloat(doc.advancePaid) > 0) {
+    message += `Advance Proposed: ${formatINR(doc.advancePaid)}\n`;
+    message += `*Estimated Balance: ${formatINR(doc.balanceDue || 0)}*\n`;
   }
 
   message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-  message += `Thank you for choosing Silver Catering Services! For any queries or confirmations, please contact manager at +91 98464 15767.`;
+  message += `Thank you for choosing Silver Catering Services! For any queries, please call Manager at +91 98464 15767.`;
 
   return message;
 }

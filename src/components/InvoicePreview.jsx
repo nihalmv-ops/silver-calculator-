@@ -1,6 +1,6 @@
 import React from 'react';
 import { formatINR, formatDate } from '../utils/formatters';
-import { calcRowAmount, determinePaymentStatus } from '../utils/calculations';
+import { determinePaymentStatus } from '../utils/calculations';
 import { BANK_DETAILS } from '../utils/storage';
 import {
   PrinterIcon,
@@ -143,14 +143,14 @@ export default function InvoicePreview({
 
         {/* Customer & Invoice Meta Grid */}
         <div className="doc-meta-grid">
-          {/* Bill To */}
+          {/* Customer Details */}
           <div className="doc-meta-card">
             <div className="doc-meta-card-header">
-              <span>INVOICE TO (CLIENT)</span>
+              <span>CUSTOMER DETAILS</span>
             </div>
             <div className="doc-meta-card-body">
-              <p className="client-name">{invoice.customerName || 'Valued Client'}</p>
-              <p className="meta-text"><strong>Phone:</strong> {invoice.customerPhone || '—'}</p>
+              <p className="client-name">{invoice.customerName || 'Valued Customer'}</p>
+              <p className="meta-text"><strong>Contact Number:</strong> {invoice.customerPhone || '—'}</p>
               {invoice.customerEmail && (
                 <p className="meta-text"><strong>Email:</strong> {invoice.customerEmail}</p>
               )}
@@ -168,55 +168,50 @@ export default function InvoicePreview({
             <div className="doc-meta-card-body">
               <div className="meta-two-col">
                 <div>
-                  <p className="meta-text"><strong>Invoice Date:</strong> {formatDate(invoice.date)}</p>
-                  <p className="meta-text"><strong>Due Date:</strong> {formatDate(invoice.dueDate)}</p>
-                  <p className="meta-text"><strong>Guests / Pax:</strong> {invoice.guests || '—'} Guests</p>
-                </div>
-                <div>
-                  <p className="meta-text"><strong>Event:</strong> {invoice.eventName || 'Catering Event'}</p>
+                  <p className="meta-text"><strong>Event Name:</strong> {invoice.eventName || 'Catering Event'}</p>
                   <p className="meta-text"><strong>Event Date:</strong> {formatDate(invoice.eventDate)}</p>
                   <p className="meta-text"><strong>Time:</strong> {invoice.eventTime || 'As scheduled'}</p>
                 </div>
+                <div>
+                  <p className="meta-text"><strong>Number of Guests (Pax):</strong> <span className="font-bold text-emerald-950">{invoice.guests || '—'} Guests</span></p>
+                  <p className="meta-text"><strong>Invoice Date:</strong> {formatDate(invoice.date)}</p>
+                  <p className="meta-text"><strong>Due Date:</strong> {formatDate(invoice.dueDate)}</p>
+                </div>
               </div>
-              {invoice.venue && (
-                <p className="meta-text mt-1"><strong>Venue:</strong> {invoice.venue}</p>
-              )}
+              <p className="meta-text mt-1"><strong>Venue:</strong> {invoice.venue || 'To be specified'}</p>
             </div>
           </div>
         </div>
 
-        {/* Services Table */}
+        {/* Customer-Facing Services Table (Service | Quantity ONLY) */}
         <div className="doc-table-section">
-          <table className="doc-table">
+          <table className="doc-table customer-facing-table">
             <thead>
               <tr>
-                <th className="th-idx">#</th>
-                <th className="th-desc">CATERING SERVICE / FUNCTION</th>
-                <th className="th-qty text-center">QTY / PAX</th>
-                <th className="th-unit text-center">UNIT</th>
-                <th className="th-rate text-right">RATE (₹)</th>
-                <th className="th-amount text-right">AMOUNT (₹)</th>
+                <th className="th-customer-service">SERVICE</th>
+                <th className="th-customer-qty text-right">QUANTITY</th>
               </tr>
             </thead>
             <tbody>
               {validItems.length === 0 ? (
                 <tr>
-                  <td colSpan="6" className="text-center py-4 text-gray-500 italic">
+                  <td colSpan="2" className="text-center py-6 text-gray-500 italic">
                     No services itemized.
                   </td>
                 </tr>
               ) : (
                 validItems.map((item, index) => {
-                  const amt = calcRowAmount(item.quantity, item.rate);
+                  const qtyDisplay = item.quantity || 1;
+                  const unitDisplay = item.unit && !['Guests', 'Pax', 'Nos', 'PCS', 'Fixed', 'Set', 'Event'].includes(item.unit)
+                    ? ` ${item.unit}`
+                    : '';
                   return (
                     <tr key={item.id || index}>
-                      <td className="td-idx text-center">{index + 1}</td>
-                      <td className="td-desc font-medium text-slate-900">{item.name || 'Service Item'}</td>
-                      <td className="td-qty text-center font-mono">{item.quantity || 1}</td>
-                      <td className="td-unit text-center text-slate-600">{item.unit || 'Guests'}</td>
-                      <td className="td-rate text-right font-mono">{formatINR(item.rate || 0, false)}</td>
-                      <td className="td-amount text-right font-mono font-semibold text-slate-950">
-                        {formatINR(amt, false)}
+                      <td className="td-customer-service font-medium text-slate-900">
+                        {item.name || 'Service Item'}
+                      </td>
+                      <td className="td-customer-qty text-right font-mono font-semibold text-slate-900">
+                        {qtyDisplay}{unitDisplay && <span className="text-xs font-sans text-slate-500 font-normal ml-1">{unitDisplay}</span>}
                       </td>
                     </tr>
                   );
@@ -226,7 +221,7 @@ export default function InvoicePreview({
           </table>
         </div>
 
-        {/* Bottom Section: Payment Info & Breakdown */}
+        {/* Bottom Section: Payment Info & Customer Totals */}
         <div className="doc-bottom-section">
           {/* Bank / Payment Info & Transaction Details */}
           <div className="doc-terms-box doc-payment-info-box">
@@ -252,42 +247,26 @@ export default function InvoicePreview({
             )}
           </div>
 
-          {/* Financial Totals Summary Box */}
-          <div className="doc-summary-box invoice-summary-box">
-            <div className="summary-line">
-              <span className="lbl">Subtotal:</span>
-              <span className="val font-mono">{formatINR(invoice.subtotal || 0)}</span>
-            </div>
-
-            {invoice.discountAmount > 0 && (
-              <div className="summary-line text-rose-700">
-                <span className="lbl">
-                  Discount ({invoice.discountType === 'percent' ? `${invoice.discountValue}%` : 'Flat'}):
-                </span>
-                <span className="val font-mono">- {formatINR(invoice.discountAmount)}</span>
-              </div>
-            )}
-
-            {invoice.taxEnabled && invoice.gstAmount > 0 && (
-              <div className="summary-line">
-                <span className="lbl">GST ({invoice.gstPercent}%):</span>
-                <span className="val font-mono">+ {formatINR(invoice.gstAmount)}</span>
-              </div>
-            )}
-
+          {/* Customer Financial Totals Summary Box */}
+          <div className="doc-summary-box customer-summary-box invoice-summary-box">
             <div className="summary-grand-total">
               <span className="lbl">TOTAL AMOUNT:</span>
               <span className="val font-mono">{formatINR(invoice.grandTotal || 0)}</span>
             </div>
 
-            <div className="summary-line text-emerald-800 font-medium pt-1">
-              <span className="lbl">Advance Received:</span>
-              <span className="val font-mono">{formatINR(invoice.advancePaid || 0)}</span>
+            <div className="summary-line text-slate-700 pt-1">
+              <span className="lbl">ADVANCE PAID:</span>
+              <span className="val font-mono font-semibold text-slate-900">{formatINR(invoice.advancePaid || 0)}</span>
             </div>
 
             <div className="summary-line font-bold balance-highlight-line">
               <span className="lbl">BALANCE DUE:</span>
               <span className="val font-mono text-emerald-950">{formatINR(invoice.balanceDue || 0)}</span>
+            </div>
+
+            <div className="summary-payment-status-row flex items-center justify-between mt-2 pt-2 border-t border-emerald-100">
+              <span className="text-xs uppercase tracking-wider font-semibold text-slate-500">Payment Status:</span>
+              <div>{getStatusStamp()}</div>
             </div>
           </div>
         </div>
